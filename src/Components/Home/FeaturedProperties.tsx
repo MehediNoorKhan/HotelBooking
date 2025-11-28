@@ -17,7 +17,7 @@ export default function FeaturedProperties() {
                     Featured Properties
                 </span>
 
-                <p className="text-white text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] max-w-[600px] xl:text-[16px]">
+                <p className="text-white text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] xl:text-[16px]">
                     Handpicked apartments that embody sophistication and comfort in New York’s most prestigious locations.
                 </p>
             </div>
@@ -138,7 +138,7 @@ export default function FeaturedProperties() {
                                     mt-[14px] w-full border border-[#EBE0CA] text-black
                                     py-[10px] rounded-xl text-[14px] sm:text-[15px] md:text-[16px]
                                     font-medium transition hover:bg-[#D4BB8C] hover:text-white
-                                    xl:py-[8px] xl:px-[137px]
+                                    xl:py-[8px] xl:px-[137px] cursor-pointer
                                 "
                             >
                                 See details...
