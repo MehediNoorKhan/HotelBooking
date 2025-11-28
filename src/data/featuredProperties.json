@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Tribeca Penthouse Suite",
+    "location": "Tribeca, Manhattan",
+    "bedroom": 3,
+    "bathroom": 3,
+    "price": 8500,
+    "facilities": ["WiFi", "AC", "Kitchen", "Gym"],
+    "image": "https://i.ibb.co.com/6J1Lr9Jc/card-Image.jpg"
+  }
+]

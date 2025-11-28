@@ -1,7 +1,10 @@
 import Banner from "./Banner";
+import FeaturedProperties from "./FeaturedProperties";
 
 export default function Home() {
     return (
-        <Banner></Banner>
+        <>
+            <Banner></Banner>
+            <FeaturedProperties></FeaturedProperties></>
     )
 }
