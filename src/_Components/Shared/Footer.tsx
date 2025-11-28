@@ -80,7 +80,7 @@ export default function Footer() {
             </div>
 
             {/* BOTTOM COPYRIGHT BAR */}
-            <div className="max-w-7xl mx-auto border-t border-[#ffffff]/10 bg-[#000000] xl:mt-[48px]">
+            <div className="max-w-7xl mx-auto border-t border-[#ffffff]/10 bg-[#000000] mt-[24px] xl:mt-[48px]">
                 <p className="text-center py-6 textprimarygray">
                     © 2025. All rights reserved.
                 </p>

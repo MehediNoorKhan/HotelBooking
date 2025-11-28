@@ -19,18 +19,18 @@ export default function ChooseUs() {
     return (
         <div className="
             bg-[#161616]
-            px-4 py-4
-            
-            md:px-10 md:py-4
-            lg:px-20 lg:py-8
-            xl:px-28 xl:py-8
+           
+            lg:px-[60px] xl:px-[120px] 2xl:px-[4px]
+           md:py-4
+            lg:py-8
+           xl:py-8
             flex flex-col items-center text-center
         ">
 
             {/* Swiper Styles */}
             <style>{`
                 .chooseus-swiper {
-                    padding-bottom: 60px !important;
+                    padding-bottom: 64px !important;
                 }
 
                 .chooseus-swiper .swiper-pagination {
@@ -117,7 +117,7 @@ export default function ChooseUs() {
                                     md:w-[360px] md:h-[260px]
                                     lg:w-[360px] lg:h-[260px]
                                     xl:w-[380px] xl:h-[280px]
-                                    2xl:w-[440px] 2xl:h-[320px]
+                                    2xl:w-[556px] 2xl:h-[380px]
                                 "
                             />
 

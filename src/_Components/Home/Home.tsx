@@ -1,6 +1,8 @@
 import Banner from "./Banner";
 import ChooseUs from "./ChooseUs";
+import Discover from "./Discover";
 import FeaturedProperties from "./FeaturedProperties";
+import Inquiry from "./Inquiry";
 
 export default function Home() {
     return (
@@ -8,6 +10,8 @@ export default function Home() {
             <Banner></Banner>
             <FeaturedProperties></FeaturedProperties>
             <ChooseUs></ChooseUs>
+            <Discover></Discover>
+            <Inquiry></Inquiry>
         </>
     )
 }
