@@ -3,9 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
-import carouselimg1 from "../../images/carouselimg1.png";
-import carouselimg2 from "../../images/carouselimg2.png";
-import carouselimg3 from "../../images/carouselimg3.png";
+import carouselimg1 from "@/images/carouselimg1.png";
+import carouselimg2 from "@/images/carouselimg2.png";
+import carouselimg3 from "@/images/carouselimg3.png";
 
 export default function ChooseUs() {
     const [activeIndex, setActiveIndex] = useState(1);
@@ -20,7 +20,7 @@ export default function ChooseUs() {
         <div className="
             bg-[#161616]
            
-            lg:px-[60px] xl:px-[120px] 2xl:px-[4px]
+            lg:px-[60px] xl:px-[120px] 2xl:px-1
            md:py-4
             lg:py-8
            xl:py-8

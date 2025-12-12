@@ -4,7 +4,7 @@ import Footer from "../Shared/Footer";
 
 export default function RootLayout() {
   return (
-    <div>
+    <div className="bg-foreground">
       <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>

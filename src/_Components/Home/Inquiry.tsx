@@ -27,62 +27,7 @@ export default function Inquiry() {
         "
       ></div>
 
-      {/* ---------- MOBILE & TABLET LAYOUT (STACKED) ---------- */}
-      <div className="flex flex-col lg:hidden relative z-10 px-4">
-
-        {/* Image */}
-        <img
-          src={inquiryimg}
-          alt="Inquiry"
-          className="
-            w-full
-            max-h-[380px]
-            relative
-            top-16
-            object-cover
-            rounded-md
-            mb-24
-          "
-        />
-
-        {/* Form */}
-        <form className="space-y-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6">
-
-          <Input
-            placeholder="Name"
-            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
-          />
-
-          <Input
-            placeholder="Email"
-            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
-          />
-
-          <Input
-            placeholder="Subject"
-            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
-          />
-
-          <textarea
-            placeholder="Message"
-            rows={4}
-            className="bg-transparent w-full border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
-          />
-
-          <Button
-            type="submit"
-            className="w-full border border-white rounded-md bg-transparent text-white hover:bg-white hover:text-black transition cursor-pointer"
-          >
-            Submit
-          </Button>
-        </form>
-
-        {/* Bottom Text */}
-        <p className="mt-10 text-gray-300 text-[16px] md:text-base max-w-md mx-auto">
-          We’re here to help you find the perfect luxury apartment. Fill out the details
-          below, and we’ll reach out with availability and pricing.
-        </p>
-      </div>
+      
 
       {/* ---------- DESKTOP LAYOUT (LAYERED) ---------- */}
       <div className="hidden lg:block relative z-10 min-h-[650px]">
@@ -151,6 +96,65 @@ export default function Inquiry() {
             Fill out the details below, and we’ll reach out with availability and pricing.
           </p>
         </div>
+      </div>
+
+
+
+      {/* ---------- MOBILE & TABLET LAYOUT (STACKED) ---------- */}
+      <div className="flex flex-col lg:hidden relative z-10 px-4">
+
+        {/* Image */}
+        <img
+          src={inquiryimg}
+          alt="Inquiry"
+          className="
+            w-full
+            max-h-[380px]
+            relative
+            top-16
+            object-cover
+            rounded-md
+            mb-24
+          "
+        />
+
+        {/* Form */}
+        <form className="space-y-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6">
+
+          <Input
+            placeholder="Name"
+            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
+          />
+
+          <Input
+            placeholder="Email"
+            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
+          />
+
+          <Input
+            placeholder="Subject"
+            className="bg-transparent border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
+          />
+
+          <textarea
+            placeholder="Message"
+            rows={4}
+            className="bg-transparent w-full border-0 border-b border-white rounded-none text-white placeholder:text-gray-300 focus-visible:ring-0"
+          />
+
+          <Button
+            type="submit"
+            className="w-full border border-white rounded-md bg-transparent text-white hover:bg-white hover:text-black transition cursor-pointer"
+          >
+            Submit
+          </Button>
+        </form>
+
+        {/* Bottom Text */}
+        <p className="mt-10 text-gray-300 text-[16px] md:text-base max-w-md mx-auto">
+          We’re here to help you find the perfect luxury apartment. Fill out the details
+          below, and we’ll reach out with availability and pricing.
+        </p>
       </div>
 
     </section>
