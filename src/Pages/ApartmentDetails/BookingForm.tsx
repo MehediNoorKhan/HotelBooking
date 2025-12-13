@@ -1,5 +1,4 @@
-
-import  { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,6 +10,11 @@ import {
   PopoverTrigger,
 } from "../../components/ui/popover";
 import { Calendar } from "../../components/ui/calendar";
+import {
+  RippleButton,
+  RippleButtonRipples,
+} from "../../components/animate-ui/components/buttons/ripple";
+import { toast } from "sonner";
 
 interface BookingFormProps {
   monthlyRate?: string;
@@ -48,7 +52,7 @@ const bookingSchema = z
 const BookingForm: React.FC<BookingFormProps> = ({
   monthlyRate = "$12,500",
   minimumStay = "30 days",
-  onSubmit,
+  // onSubmit,
 }) => {
   // React Hook Form setup
   const {
@@ -65,15 +69,20 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const [checkOutDate, setCheckOutDate] = useState<Date | undefined>();
 
   const submitHandler = (data: BookingFormData) => {
-    if (onSubmit) onSubmit(data);
-    else alert("Booking request submitted!");
+    if (data.checkIn && data.checkOut) {
+      // Here will be the logic to handle form submission, e.g., calling onSubmit prop
+      console.log("Booking submitted:", data);
+    
+    toast.success("Booking request submitted! Our team will contact you within 24 hours.");
+      return;
+    }
   };
 
   return (
     <div
       className="
       flex-1 min-w-[320px] max-w-[500px] max-h-fit
-      bg-primary-foreground border border-foreground 
+      bg-primary-foreground border border-primary
       rounded-2xl p-8  top-10
     "
     >
@@ -87,7 +96,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
       >
         {/* Check-in */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px] flex gap-1.5 items-center">
+          <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <CalendarIcon className="text-primary w-4 h-4" /> Check-in Date
           </label>
           <Popover>
@@ -95,7 +104,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <button
                 type="button"
                 className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded-lg 
-                           p-[14px_16px] text-white text-[14px] text-left outline-none 
+                           p-[14px_16px] text-muted text-[14px] text-left outline-none 
                            transition-colors focus:border-[#c9a961]"
               >
                 {checkInDate
@@ -121,7 +130,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         {/* Check-out */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px] flex gap-1.5 items-center">
+          <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <CalendarIcon className="text-primary w-4 h-4" /> Check-out Date
           </label>
           <Popover>
@@ -155,7 +164,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         {/* Full Name */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px] flex gap-1.5 items-center">
+          <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <UserRound className="text-primary w-4 h-4" /> Full Name
           </label>
           <input
@@ -173,7 +182,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         {/* Email */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px] flex gap-1.5 items-center">
+          <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <Mail className="text-primary w-4 h-4" /> Email Address
           </label>
           <input
@@ -191,7 +200,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         {/* Phone */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px] flex gap-1.5 items-center">
+          <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <Phone className="text-primary w-4 h-4" /> Phone Number
           </label>
           <input
@@ -209,7 +218,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         {/* Message */}
         <div className="flex flex-col gap-2">
-          <label className="text-[#888] text-[13px]">Message (Optional)</label>
+          <label className="text-muted text-[13px]">Message (Optional)</label>
           <textarea
             {...register("message")}
             rows={4}
@@ -223,30 +232,30 @@ const BookingForm: React.FC<BookingFormProps> = ({
         {/* Pricing Info */}
         <div className="p-4 ">
           <div className="flex justify-between mb-2">
-            <span className="text-[#888] text-[14px]">Monthly Rate</span>
+            <span className="text-muted text-[14px]">Monthly Rate</span>
             <span className="text-primary text-[18px] font-normal">
               {monthlyRate}
             </span>
           </div>
-          <div className="text-[#666] text-[12px]">
+          <div className="text-muted text-[12px]">
             Minimum stay: {minimumStay}
           </div>
         </div>
 
         {/* Submit button */}
-        <button
+        <RippleButton
           type="submit"
-          className="
+          className=" h-14
             bg-foreground border border-border/30 text-muted 
             rounded-lg py-4 text-[16px] font-medium mt-2
             hover:bg-primary hover:border-primary transition
           "
         >
           Booking
-        </button>
-
+          <RippleButtonRipples />
+        </RippleButton>
         {/* Disclaimer */}
-        <div className="text-[#888] text-[12px] text-center leading-normal">
+        <div className="text-muted text-[12px] text-center leading-normal">
           You won't be charged yet. Our team will contact you within 24 hours.
         </div>
       </form>

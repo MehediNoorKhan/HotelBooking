@@ -63,7 +63,7 @@ const Carousel: React.FC<CarouselProps> = ({ images, className }) => {
             onClick={() => setCurrent(index)}
             className={`
               h-2 w-2 rounded-full cursor-pointer transition-all 
-              ${current === index ? "bg-background scale-125" : "bg-white/50 hover:bg-white"}
+              ${current === index ? "bg-background scale-125" : "bg-background/50 hover:bg-background"}
             `}
           />
         ))}

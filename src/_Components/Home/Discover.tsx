@@ -7,7 +7,7 @@ export default function Discover() {
             className="
                 relative 
                 w-full 
-                px-[16px]
+                px-4
                 xl:px-[100px] 
                 xl:py-[100px]
                 bg-[#161616]
@@ -41,7 +41,7 @@ export default function Discover() {
         md:bottom-10 
         max-w-[90%] md:max-w-[45%]
         text-white
-        pb-[80px]
+        pb-20
         p-4 md:p-6
     "
                     style={{

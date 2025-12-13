@@ -1,7 +1,6 @@
 import { BathIcon, BedDouble, DollarSign, MoveDiagonal, MapPin, UsersRoundIcon } from "lucide-react";
 import React from "react";
 import StatCard from "./StatCardProps";
-import FeaturedProperties from "../Home/FeaturedProperties";
 
 interface PropertyInfoProps {
   monthlyRate?: string;
@@ -39,12 +38,12 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
       </div>
 
       {/* About Section */}
-      <div className="bg-[#2a2a2a] border border-primary rounded-2xl p-8">
-        <h2 className="text-[#c9a961] text-[20px] font-normal mb-6 tracking-wide">
+      <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
+        <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
           About This Residence
         </h2>
 
-        <div className="text-[#ccc] leading-[1.8]">
+        <div className="text-muted leading-[1.8]">
           <p className="mb-4 text-[14px]">
             Step into a world of refined elegance at The Tribeca Grand Penthouse, where contemporary luxury meets timeless sophistication. This meticulously curated three-bedroom residence offers an unparalleled living experience in one of Manhattan's most coveted neighborhoods.
           </p>
