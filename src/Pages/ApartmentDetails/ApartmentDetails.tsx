@@ -1,4 +1,4 @@
-import img1 from "@/images/apartmentdetails.png";
+import img1 from "../../images/apartmentdetails.png";
 import Carousel from "./Carousel";
 import { Heart, Share2 } from "lucide-react";
 import PropertyInfo from "./PropertyInfo";
