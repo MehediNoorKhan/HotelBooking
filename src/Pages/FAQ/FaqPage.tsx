@@ -11,12 +11,11 @@ const FaqPage = () => {
         {/* Hero Section */}
       <div className="flex flex-col items-center text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-muted mb-4">
-          About Us
+          Frequently Asked
         </h1>
 
         <p className="text-base sm:text-lg text-muted max-w-2xl">
-          Your trusted partner for authentic NYC apartment experiences since
-          2018
+          Everything you need to know about booking and staying in our NYC apartments. Can't find what you're looking for? We're here to help.
         </p>
 
         {/* Full-width hero image */}
