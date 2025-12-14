@@ -18,7 +18,7 @@ export default function Footer() {
 
           {/* Social Icons */}
           <div className="flex gap-3 mt-6">
-            <div className="p-2.5 bg-background/10 rounded-xl">
+            <div className="p-2.5 bg-background/10 hover:bg-primary transform transition-all ease-in rounded-xl">
               <a
                 href="/"
                 className="cursor-pointer hover:text-muted transition"
@@ -29,7 +29,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="p-2.5 bg-background/10 rounded-xl">
+            <div className="p-2.5 bg-background/10 hover:bg-primary transform transition-all ease-in rounded-xl">
               <a
                 href="/"
                 className="cursor-pointer hover:text-muted transition"
@@ -40,7 +40,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="p-2.5 bg-background/10 rounded-xl">
+            <div className="p-2.5 bg-background/10 hover:bg-primary transform transition-all ease-in rounded-xl">
               <a
                 href="/"
                 className="cursor-pointer hover:text-muted transition"
@@ -51,7 +51,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="p-2.5 bg-background/10 rounded-xl">
+            <div className="p-2.5 bg-background/10 hover:bg-primary transform transition-all ease-in rounded-xl">
               <a
                 href="/"
                 className="cursor-pointer hover:text-muted transition"

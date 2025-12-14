@@ -4,6 +4,8 @@ import image from "../../images/apartmentImage.png";
 import propertiesData from "../../data/featuredProperties.json";
 
 const Apartments = () => {
+
+  
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -17,7 +19,7 @@ const Apartments = () => {
             Explore Our Luxury Apartments in New York
           </h1>
 
-          <p className="text-muted text-base sm:text-lg leading-relaxed">
+          <p className="text-muted text-base w-3/4 sm:text-lg leading-relaxed self-center">
             Browse our curated collection of fully furnished, premium residences
             located in the most desirable neighborhoods of New York City.
             Designed for style, comfort, and effortless living.

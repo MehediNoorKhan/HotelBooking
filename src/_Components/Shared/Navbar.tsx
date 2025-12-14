@@ -31,7 +31,7 @@ export default function Navbar() {
       {/* Overlay */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-40"
+          className="fixed inset-0 bg-foreground/20 z-40"
           onClick={() => setIsMenuOpen(false)}
         />
       )}

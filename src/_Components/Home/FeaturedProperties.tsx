@@ -53,14 +53,14 @@ export default function FeaturedProperties({
                 gap-5 sm:gap-6 md:gap-7 lg:gap-8 xl:gap-10
             "
       >
-        {visibleProperties.map((item,index) => (
+        {visibleProperties.map((item, index) => (
           <motion.div
-           key={item.id}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ delay: index * 0.1, duration: 0.2 }}
-      className="
+            key={item.id}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ delay: index * 0.1, duration: 0.2 }}
+            className="
         bg-background rounded-[12px] overflow-hidden
         border border-border
         shadow-sm transition-shadow hover:shadow-lg
@@ -158,17 +158,17 @@ export default function FeaturedProperties({
 
               {/* Button */}
               <Link
-  to={`/apartment/${item.id}`}
-  className="
+                to={`/apartment/${item.id}`}
+                className="
     mt-3.5 w-full border border-primary/40 text-foreground
     py-2.5 rounded-xl text-[14px] sm:text-[15px] md:text-[16px]
     font-medium transition hover:bg-primary hover:text-muted
     xl:py-2 xl:px-[137px] cursor-pointer
     text-center block
   "
->
-  See details...
-</Link>
+              >
+                See details...
+              </Link>
             </div>
           </motion.div>
         ))}
@@ -179,7 +179,7 @@ export default function FeaturedProperties({
             onClick={handleLoadMore}
             className="mt-12 flex gap-2 items-center bg-background text-foreground py-2 px-6 rounded-lg hover:bg-primary/90 transition"
           >
-            See More Apartments <ChevronDown/>
+            See More Apartments <ChevronDown />
           </button>
         </div>
       )}
