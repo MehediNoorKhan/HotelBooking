@@ -32,7 +32,7 @@ export default function FeaturedProperties({
   const visibleProperties = properties.slice(0, visibleCount);
 
   return (
-    <div className="bg-foreground px-3 py-7.5 sm:px-5 sm:py-10 md:px-10 lg:px-[60px] xl:px-[100px] xl:py-[100px]">
+    <div className="bg-foreground px-3 py-7.5">
       {/* Title */}
       <div className="flex flex-col justify-center items-center text-center gap-3 mb-[30px] xl:mb-[50px]">
         <span className="bg-background text-foreground font-medium text-[18px] sm:text-[16px] px-3.5 py-2 rounded-2xl xl:text-[18px] xl:px-5 xl:py-2.5">
