@@ -80,9 +80,9 @@ export default function Navbar() {
           ))}
 
           {/* Sign In */}
-          <button className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full">
+          <Link to={"/signin"} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
             Sign In
-          </button>
+          </Link>
         </nav>
       </div>
     </div>
