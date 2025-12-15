@@ -39,7 +39,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-neutral-900 text-muted flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -63,10 +63,10 @@ export default function SignUpPage() {
                       <Input
                         {...field}
                         placeholder="Enter your first name"
-                        className="bg-transparent border-gray-600 text-white placeholder:text-gray-600"
+                        className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-primary" />
                   </FormItem>
                 )}
               />
@@ -81,10 +81,10 @@ export default function SignUpPage() {
                       <Input
                         {...field}
                         placeholder="Enter your last name"
-                        className="bg-transparent border-gray-600 text-white placeholder:text-gray-600"
+                        className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-primary" />
                   </FormItem>
                 )}
               />
@@ -102,10 +102,10 @@ export default function SignUpPage() {
                       {...field}
                       type="email"
                       placeholder="Enter your email address"
-                      className="bg-transparent border-gray-600 text-white placeholder:text-gray-600"
+                      className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -122,10 +122,10 @@ export default function SignUpPage() {
                       {...field}
                       type="tel"
                       placeholder="Enter your phone number"
-                      className="bg-transparent border-gray-600 text-white placeholder:text-gray-600"
+                      className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -143,7 +143,7 @@ export default function SignUpPage() {
                         {...field}
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
-                        className="bg-transparent border-gray-600 text-white placeholder:text-gray-600 pr-12"
+                        className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60 pr-12"
                       />
                       <button
                         type="button"
@@ -154,7 +154,7 @@ export default function SignUpPage() {
                       </button>
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -172,7 +172,7 @@ export default function SignUpPage() {
                         {...field}
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm password"
-                        className="bg-transparent border-gray-600 text-white placeholder:text-gray-600 pr-12"
+                        className="bg-transparent border-primary/50 text-muted placeholder:text-muted/60 pr-12"
                       />
                       <button
                         type="button"
@@ -189,7 +189,7 @@ export default function SignUpPage() {
                       </button>
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -207,7 +207,7 @@ export default function SignUpPage() {
               <span className="text-gray-400">Already have an account? </span>
               <Link
                 to="/signin"
-                className="text-white hover:text-gray-300 font-medium"
+                className="text-muted hover:text-muted/40 font-medium"
               >
                 Sign In
               </Link>

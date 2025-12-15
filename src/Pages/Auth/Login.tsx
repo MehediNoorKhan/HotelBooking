@@ -68,11 +68,11 @@ export default function LoginPage({
                       {...field}
                       type="email"
                       placeholder="Enter your email address"
-                      className="bg-transparent border border-border/50 text-muted placeholder:text-muted/40
-                                 focus:border-border/50"
+                      className="bg-transparent border border-primary/50 text-muted placeholder:text-muted/40
+                                 focus:border-border/80"
                     />
                   </FormControl>
-                  <FormMessage  />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -92,8 +92,8 @@ export default function LoginPage({
                         {...field}
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        className="bg-transparent border border-border/50 text-muted placeholder:text-muted/40
-                                   focus:border-border/50 pr-12"
+                        className="bg-transparent border border-primary/50 text-muted placeholder:text-muted/40
+                                   focus:border-primary/80 pr-12"
                       />
                       <button
                         type="button"
@@ -104,7 +104,7 @@ export default function LoginPage({
                       </button>
                     </div>
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage className="text-primary"/>
                 </FormItem>
               )}
             />
@@ -114,7 +114,7 @@ export default function LoginPage({
               <button
                 type="button"
                 onClick={onForgotPassword}
-                className="text-muted/50 hover:text-muted text-sm transition-colors"
+                className="text-muted hover:text-muted/60 text-sm transition-colors"
               >
                 Forgot your password?
               </button>
