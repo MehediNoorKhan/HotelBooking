@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginFormData } from "@/types/schema";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { loginUser } from "@/features/auth/authThunk";
+import { toast } from "sonner";
 
 
 interface LoginPageProps {
@@ -21,9 +24,13 @@ interface LoginPageProps {
 }
 
 export default function LoginPage({
-  onSignIn,
   onForgotPassword,
 }: LoginPageProps = {}) {
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading, isAuthenticated, error } = useAppSelector(s => s.auth);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormData>({
@@ -34,9 +41,20 @@ export default function LoginPage({
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    onSignIn?.(data.email, data.password);
+ const onSubmit = async (data: LoginFormData) => {
+    const result = await dispatch(loginUser({ email: data.email, password: data.password }));
+
+    if (loginUser.fulfilled.match(result)) {
+      toast.success("Login successful!");
+      navigate("/dashboard");
+    } else {
+      toast.error(result.payload as string || "Login failed");
+    }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/dashboard");
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-foreground text-muted flex items-center justify-center">

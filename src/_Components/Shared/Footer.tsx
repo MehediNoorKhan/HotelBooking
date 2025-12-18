@@ -143,20 +143,6 @@ export default function Footer() {
             <p>+1 212-555-1234</p>
             <p>info@citypads.com</p>
           </div>
-
-          <p className="mt-6 text-muted font-light">Newsletter</p>
-
-          {/* INPUT FIELD */}
-          <input
-            type="text"
-            placeholder="Email"
-            className="
-                            w-full mt-2 bg-transparent 
-                            border-b border-background 
-                            pb-1 outline-none
-                            text-background font-medium placeholder-background/50
-                        "
-          />
         </div>
       </div>
 

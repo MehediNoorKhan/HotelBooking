@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,10 +17,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUpSchema, type SignUpFormData } from "@/types/schema";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { signUp } from "@/features/auth/authThunk";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const dispatch = useAppDispatch();
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -35,8 +39,19 @@ export default function SignUpPage() {
   });
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log("Sign up data:", data);
+    dispatch(signUp(data));
+    console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
+
   };
+
+  const navigate = useNavigate();
+  const { isAuthenticated, loading, error } = useAppSelector((s) => s.auth);
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast.success("Your account has been created successfully.");
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-neutral-900 text-muted flex items-center justify-center p-4">
@@ -150,7 +165,11 @@ export default function SignUpPage() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
                       >
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        {showPassword ? (
+                          <EyeOff size={20} />
+                        ) : (
+                          <Eye size={20} />
+                        )}
                       </button>
                     </div>
                   </FormControl>
@@ -197,10 +216,15 @@ export default function SignUpPage() {
             {/* Submit */}
             <Button
               type="submit"
+              disabled={loading}
               className="w-full bg-primary hover:bg-primary/80 text-muted font-medium py-3 rounded-lg"
             >
-              Sign Up
+              {loading ? "Creating account..." : "Sign Up"}
             </Button>
+
+            {error && (
+              <p className="text-center text-sm text-red-500 mt-2">{error}</p>
+            )}
 
             {/* Sign In */}
             <div className="text-center">

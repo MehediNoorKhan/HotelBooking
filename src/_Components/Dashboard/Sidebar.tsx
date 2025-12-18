@@ -1,11 +1,25 @@
 import { Home, Calendar, Settings, User, LogOut } from 'lucide-react';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import userIcon from "@/images/dashboardimage.svg"
 import Logo from "@/images/dashboardLogo.png"
+import { useAppDispatch } from '@/app/hooks';
+import { logoutUser } from '@/features/auth/authThunk';
+import { toast } from 'sonner';
 
 export default function Sidebar() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-
+const handleLogout = async () => {
+  const result = await dispatch(logoutUser());
+  if (logoutUser.fulfilled.match(result)) {
+    toast.success(result.payload.message || "Logged out successfully.");
+    // Optional: redirect to login page
+    navigate("/");
+  } else {
+    toast.error(result.payload as string || "Logout failed.");
+  }
+};
 
 const navItemClass = ({ isActive }: { isActive: boolean }) =>
   `
@@ -77,7 +91,9 @@ const navItemClass = ({ isActive }: { isActive: boolean }) =>
 
       {/* Log Out */}
       <div className="p-4">
-        <button className="w-full text-white hover:bg-gray-900 rounded-xl px-4 py-3 flex items-center gap-3 mb-3 ">
+        <button
+        onClick={handleLogout}
+        className="w-full text-muted hover:bg-foreground rounded-xl px-4 py-3 flex items-center gap-3 mb-3 ">
           <LogOut size={20} />
           <span>Log Out</span>
         </button>
