@@ -29,7 +29,7 @@ export default function LoginPage({
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, isAuthenticated, error } = useAppSelector(s => s.auth);
+  const {  isAuthenticated } = useAppSelector(s => s.auth);
 
   const [showPassword, setShowPassword] = useState(false);
 
