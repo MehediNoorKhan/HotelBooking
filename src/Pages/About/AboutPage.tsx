@@ -1,6 +1,8 @@
 import image from "@/images/apartmentImage.png";
 import image2 from "@/images/aboutImage2.png";
-import { Eye, HomeIcon, ShieldCheck, Target, User } from "lucide-react";
+import ctaBg from "@/images/CTA image.png";
+
+import { Eye, HomeIcon, Send, ShieldCheck, Target, User } from "lucide-react";
 
 const AboutPage = () => {
   return (
@@ -157,6 +159,29 @@ const AboutPage = () => {
           </div>
         </div>
         </div>
+        {/* CTA */}
+      <div
+        className="container mx-auto relative h-[420px] md:h-[520px] rounded-3xl overflow-hidden flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${ctaBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-foreground/50" />
+        <div className="relative z-10 text-muted text-center px-6">
+          <h1 className="text-3xl md:text-5xl font-semibold">
+            Ready to Reserve This Apartment?
+          </h1>
+          <p className="mt-4 max-w-3xl mx-auto">
+            Experience luxury living at its finest. Our concierge team is
+            available 24/7.
+          </p>
+          <button className="mt-6 bg-primary px-6 py-3 rounded-xl flex items-center gap-2 mx-auto">
+            <Send size={18} /> Send Inquiry Now
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
