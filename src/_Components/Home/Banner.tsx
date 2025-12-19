@@ -38,7 +38,7 @@ export default function Banner() {
           className=" xl:w-7xl
                         text-background font-bold leading-tight 
                         text-2xl md:text-4xl lg:text-5xl   /* responsive */
-                         xl:text-[64px]
+                         xl:text-[64px] font-display
                     "
         >
           Experience Luxury Living in New York

@@ -8,9 +8,13 @@ import FaqPage from "@/Pages/FAQ/FaqPage";
 import DashboardHome from "@/Pages/Dashboard/DashboardHome";
 import MyBookings from "@/Pages/Dashboard/MyBookings";
 import Maintenance from "@/Pages/Dashboard/Maintenance";
-import Profile from "@/Pages/Dashboard/Profile";
+// import Profile from "@/Pages/Dashboard/Profile";
 import LoginPage from "@/Pages/Auth/Login";
 import SignUpPage from "@/Pages/Auth/Signup";
+import ForgotPasswordForm from "@/Pages/Auth/ForgotPassword";
+import VerifyEmailOTP from "@/Pages/Auth/VerifyEmailOTP";
+import SetNewPassword from "@/Pages/Auth/SetNewPassword";
+import InquiryPage from "@/Pages/Inquiry/InquiryPage";
 
 
 
@@ -51,10 +55,30 @@ export const router = createBrowserRouter([
                 element: <SignUpPage/>
             },
             {
+              
+              path: "/signin",
+              element: <LoginPage/>
+            },
+            {
                
-                path: "/signin",
-                element: <LoginPage/>
-            }
+                path: "/forgot-password",
+                element: <ForgotPasswordForm/>
+            },
+            {
+               
+                path: "/varification",
+                element: <VerifyEmailOTP/>
+            },
+            {
+               
+                path: "/update-password",
+                element: <SetNewPassword/>
+            },
+            {
+               
+                path: "/inquiry",
+                element: <InquiryPage/>
+            },
         ]
     },
 
@@ -76,7 +100,7 @@ export const router = createBrowserRouter([
     },
     {
       path: "profile",
-      element: <Profile />,
+      // element: <Profile />,
     },
   ],
 }

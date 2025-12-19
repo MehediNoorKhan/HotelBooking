@@ -1,8 +1,9 @@
 // authAPI.ts
 
 import { api } from "@/services/api";
-import type { AuthResponse, LoginPayload, SignUpPayload } from "./types";
+import type { AuthResponse, LoginPayload, SignUpPayload,ForgotPasswordPayload, ForgotPasswordResponse } from "./types";
 
+// Sign Up
 export const signUpAPI = async (
   data: SignUpPayload
 ): Promise<AuthResponse> => {
@@ -27,16 +28,16 @@ export const loginAPI = async (payload: LoginPayload): Promise<AuthResponse> => 
 };
 
 // Logout
-export const logoutAPI = async (): Promise<{ status: boolean; message: string; data: any[] }> => {
-  const token = localStorage.getItem("token");
-  const res = await api.post(
-    "/api/user-logout",
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export const logoutAPI = async () => {
+  const res = await api.post("/user-logout");
+  return res.data;
+};
+
+// Forgot Password
+
+export const forgotPasswordAPI = async (
+  payload: ForgotPasswordPayload
+): Promise<ForgotPasswordResponse> => {
+  const res = await api.post("/forget/password", payload);
   return res.data;
 };

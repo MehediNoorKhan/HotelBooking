@@ -1,7 +1,7 @@
 // authSlice.ts
 
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser, signUp } from "./authThunk";
+import { forgotPassword, loginUser, logoutUser, signUp } from "./authThunk";
 import type { AuthState } from "./types";
 
 const initialState: AuthState = {
@@ -10,6 +10,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   isAuthenticated: false,
+  otpSent: false,
 };
 
 const authSlice = createSlice({
@@ -81,7 +82,21 @@ const authSlice = createSlice({
     .addCase(logoutUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
-    });
+    })
+
+    // Forget Password
+    .addCase(forgotPassword.pending, (state) => {
+    state.loading = true;
+    state.error = null;
+  })
+  .addCase(forgotPassword.fulfilled, (state) => {
+    state.loading = false;
+    state.otpSent = true;
+  })
+  .addCase(forgotPassword.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.payload as string;
+  });
   },
 });
 

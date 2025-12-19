@@ -1,12 +1,13 @@
 import image from "@/images/apartmentImage.png";
 import image2 from "@/images/aboutImage2.png";
+import { Eye, HomeIcon, ShieldCheck, Target, User } from "lucide-react";
 
 const AboutPage = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
       {/* Hero Section */}
       <div className="flex flex-col items-center text-center">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-muted mb-4">
+        <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-muted mb-4">
           About Us
         </h1>
 
@@ -61,62 +62,101 @@ const AboutPage = () => {
         </div>
       </div>
 
+        {/* Mission & Vission */}
+        <div className="grid grid-cols-1 sm:grid-cols-2  gap-6">
+          {/* Card */}
+          <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
+      
+            <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
+              <Target className="text-black w-10 h-10" />
+            </div>
+
+            <h3 className=" text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
+             Our Mission
+            </h3>
+
+            <p className=" text-base leading-[120%]">
+              To provide descerning individuals with access to exceptional living spaces that blend luxury, comfort and convenience. We're committed to delivering a seamless, personalized experience from inquiry to move-in and beyond.
+            </p>
+          </div>
+
+          {/* Card */}
+          <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
+            <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
+              <Eye className="text-black w-10 h-10" />
+            </div>
+
+            <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
+              Our Vision
+            </h3>
+
+            <p className="text-base leading-[120%] text-muted">
+              To become the most trusted name in luxury apartment rentails, know for our unwavering commitment to quality, integrity and hospitality. We envision a future where every guest finds not just an apartment, but a true home.
+            </p>
+          </div>
+        </div>
+
       {/* Core Value */}
       <div className="mt-20">
         {/* Section Header */}
         <div className="flex flex-col gap-2.5 items-center text-center mb-12">
           <span className="bg-primary h-7.5 px-4 py-0.5 text-base font-medium rounded-full">
-            What we Stand for
+            Our Process
           </span>
 
           <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-semibold leading-[120%] text-muted">
-            Our Core Values
+            How We Work
           </h2>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6">
           {/* Card */}
-          <div className="bg-background p-6 rounded-2xl flex flex-col gap-4">
-            <div className="w-[60px] h-[60px] bg-primary rounded-[10px]" />
+          <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
+            <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
+              <HomeIcon className="text-black w-10 h-10" fill="currentColor"
+              stroke="currentColor" />
+            </div>
 
-            <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
-              Trust & Security
+            <h3 className=" text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
+              Property Curation
             </h3>
 
-            <p className="text-[16px] sm:text-[18px] lg:text-[20px] leading-[120%] text-foreground/50">
-              Every listing is personally verified. Your safety and peace of
-              mind are our top priorities.
+            <p className=" text-base leading-[120%]">
+              We personally select and inspect every property, ensuring it meets our strict criteria for location, design and quality before welcoming guests.
             </p>
           </div>
 
           {/* Card */}
-          <div className="bg-background p-6 rounded-2xl flex flex-col gap-4">
-            <div className="w-[60px] h-[60px] bg-primary rounded-[10px]" />
+          <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
+            <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
+              <ShieldCheck className="text-black w-10 h-10" fill="currentColor" />
+            </div>
 
             <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
-              Authentic Living
+              Quality Standards
             </h3>
 
-            <p className="text-[16px] sm:text-[18px] lg:text-[20px] leading-[120%] text-foreground/50">
-              Experience NYC like a local with real homes in real neighborhoods.
+            <p className="text-base leading-[120%]">
+              Each apartment is held to the highest standards of cleanliness, functionality and aesthetics. We conduct regular inspections to maintain excellence.
             </p>
           </div>
-
           {/* Card */}
-          <div className="bg-background p-6 rounded-2xl flex flex-col gap-4">
-            <div className="w-[60px] h-[60px] bg-primary rounded-[10px]" />
+          <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
+            <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
+              <User className="text-black w-10 h-10" fill="currentColor" />
+            </div>
 
             <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
-              Quality First
+              Personalize Service
             </h3>
 
-            <p className="text-[16px] sm:text-[18px] lg:text-[20px] leading-[120%] text-foreground/50">
-              Every apartment is vetted for comfort, cleanliness, and character.
+            <p className="text-base leading-[120%]">
+             From your first inquiry to move-in day and throughout your stay, our dedicated team provides tailored support and guidence every step of the way.
             </p>
           </div>
         </div>
-      </div>
+        </div>
     </div>
   );
 };

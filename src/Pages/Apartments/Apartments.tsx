@@ -29,7 +29,7 @@ const Apartments = () => {
       {/* Hero Section */}
       <section className="pt-16 sm:pt-20 lg:pt-24 pb-20 flex flex-col items-center">
         {/* Text */}
-        <div className="text-center max-w-7xl flex flex-col gap-6">
+        <div className="font-display text-center max-w-7xl flex flex-col gap-6">
           <h1 className="text-muted font-display font-bold 
                          text-[32px] sm:text-[40px] lg:text-[54px] leading-[120%]">
             Explore Our Luxury Apartments in New York

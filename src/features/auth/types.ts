@@ -37,4 +37,21 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+  otpSent: boolean,
+}
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  status: boolean;
+  message: string;
+  data: {
+    id: number;
+    email: string;
+    phone: string;
+    otp_expires_at: string;
+    is_verified: number;
+    status: string;
+  };
 }

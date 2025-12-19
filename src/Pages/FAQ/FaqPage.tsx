@@ -10,7 +10,7 @@ const FaqPage = () => {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         {/* Hero Section */}
       <div className="flex flex-col items-center text-center">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-muted mb-4">
+        <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-muted mb-4">
           Frequently Asked
         </h1>
 

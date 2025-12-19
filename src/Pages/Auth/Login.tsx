@@ -20,11 +20,9 @@ import { toast } from "sonner";
 
 interface LoginPageProps {
   onSignIn?: (email: string, password: string) => void;
-  onForgotPassword?: () => void;
 }
 
 export default function LoginPage({
-  onForgotPassword,
 }: LoginPageProps = {}) {
 
   const dispatch = useAppDispatch();
@@ -129,13 +127,13 @@ export default function LoginPage({
 
             {/* Forgot password */}
             <div className="text-left">
-              <button
+              <Link
+                to="/forgot-password"
                 type="button"
-                onClick={onForgotPassword}
                 className="text-muted hover:text-muted/60 text-sm transition-colors"
               >
                 Forgot your password?
-              </button>
+              </Link>
             </div>
 
             {/* Submit */}

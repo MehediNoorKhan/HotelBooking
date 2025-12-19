@@ -25,12 +25,12 @@ const FAQItem = ({ question, answer }: FAQ) => {
   return (
     <AccordionItem 
       value={question}
-      className="bg-background rounded-lg mb-3 border-0 shadow-sm overflow-hidden"
+      className="rounded-lg bg-muted/5 mb-3 border border-primary shadow-sm overflow-hidden"
     >
-      <AccordionTrigger className="px-5 py-4 text-left font-medium text-base hover:no-underline hover:bg-foreground/10 transition-colors ">
+      <AccordionTrigger className="px-5 py-4 text-muted text-left font-medium text-base hover:no-underline hover:bg-foreground/10 transition-colors ">
         {question}
       </AccordionTrigger>
-      <AccordionContent className="px-5 pb-4 pt-1 text-sm text-foreground/80 leading-relaxed">
+      <AccordionContent className="px-5 pb-4 pt-1 text-muted text-sm leading-relaxed">
         {answer}
       </AccordionContent>
     </AccordionItem>
@@ -42,7 +42,7 @@ const FAQSectionComponent = ({ title, faqs }: FAQSection) => {
   return (
     <div className="w-full max-w-2xl mx-auto mb-12">
       <h2 className="text-2xl font-bold text-background mb-6">{title}</h2>
-      <Accordion type="single" collapsible className="space-y-0">
+      <Accordion type="single" collapsible className="space-y-2">
         {faqs.map((faq, index) => (
           <FAQItem key={index} question={faq.question} answer={faq.answer} />
         ))}
