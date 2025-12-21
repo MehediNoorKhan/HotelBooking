@@ -84,6 +84,7 @@ useEffect(() => {
         }`}
       >
         {/* Header */}
+        <div className="bg-foreground">
         <div className="flex items-center justify-between px-6 py-6">
           <h2 className="text-muted font-display text-2xl font-semibold">Menu</h2>
           <button
@@ -95,7 +96,7 @@ useEffect(() => {
         </div>
 
         {/* Menu Items */}
-        <nav className="flex flex-col pl-20 pr-10 pb-6 mt-8 gap-2 bg-foreground rounded-l-lg">
+        <nav className="flex flex-col pl-20 pr-10 pb-[400px] mt-8 gap-2 bg-foreground rounded-l-lg  ">
           {menuItems.map((item) => (
             <NavLink
               key={item.path}
@@ -122,14 +123,15 @@ useEffect(() => {
           ))}
 
           {/* Sign In */}
-          <Link to={"/signin"} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
+          <Link to={"/signin"} onClick={() => setIsMenuOpen(false)} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
             Sign In
           </Link>
           {/* Sign Up */}
-          <Link to={"/signup"} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
+          <Link to={"/signup"} onClick={() => setIsMenuOpen(false)} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
             Sign Up
           </Link>
         </nav>
+      </div>
       </div>
     </div>
   );

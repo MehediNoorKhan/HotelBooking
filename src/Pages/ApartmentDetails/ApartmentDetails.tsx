@@ -27,6 +27,7 @@ const ApartmentDetails = () => {
 
         const res = await getApartmentDetails(id);
         setApartment(res.data.data);
+       
       } catch (error) {
         console.error("Failed to load apartment details", error);
         setApartment(null);
@@ -36,6 +37,7 @@ const ApartmentDetails = () => {
     };
 
     fetchApartment();
+    
   }, [id]);
 
   const handleBookingSubmit = (data: BookingFormData) => {
@@ -50,7 +52,7 @@ const ApartmentDetails = () => {
   if (!apartment) {
     return <div className="p-10 text-center text-muted mb-[110px]">Apartment not found</div>;
   }
-
+ console.log(apartment)
   return (
     <div className="bg-foreground">
       {/* Image Carousel */}
@@ -102,6 +104,7 @@ const ApartmentDetails = () => {
             guestCapacity={String(apartment.max_guests)}
             squareFootage={`${apartment.square_feet} sq ft`}
             location={apartment.full_address}
+            description = {apartment.description}
           />
 
           <BookingForm

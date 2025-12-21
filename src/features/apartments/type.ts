@@ -6,6 +6,7 @@ export interface Apartment {
   full_address: string;
   bedrooms: number;
   bathrooms: string;
+  description: string;
   max_guests: number;
   square_feet: number;
   status: string;
