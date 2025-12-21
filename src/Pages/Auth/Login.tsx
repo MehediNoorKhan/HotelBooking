@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -13,23 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginFormData } from "@/types/schema";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { loginUser } from "@/features/auth/authThunk";
-import { toast } from "sonner";
 
+import { useAppDispatch } from "@/app/hooks";
+import { setCredentials } from "@/features/auth/authSlice";
+import { useLoginMutation } from "@/features/auth/authAPI";
 
-interface LoginPageProps {
-  onSignIn?: (email: string, password: string) => void;
-}
-
-export default function LoginPage({
-}: LoginPageProps = {}) {
-
-  const dispatch = useAppDispatch();
+export default function LoginPage() {
   const navigate = useNavigate();
-  const {  isAuthenticated } = useAppSelector(s => s.auth);
+  const dispatch = useAppDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -39,20 +34,23 @@ export default function LoginPage({
     },
   });
 
- const onSubmit = async (data: LoginFormData) => {
-    const result = await dispatch(loginUser({ email: data.email, password: data.password }));
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const res = await login(data).unwrap();
 
-    if (loginUser.fulfilled.match(result)) {
+      dispatch(
+        setCredentials({
+          user: res.data.user,
+          token: res.data.token,
+        })
+      );
+
       toast.success("Login successful!");
       navigate("/dashboard");
-    } else {
-      toast.error(result.payload as string || "Login failed");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Login failed");
     }
   };
-
-  useEffect(() => {
-    if (isAuthenticated) navigate("/dashboard");
-  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-foreground text-muted flex items-center justify-center">
@@ -120,7 +118,7 @@ export default function LoginPage({
                       </button>
                     </div>
                   </FormControl>
-                  <FormMessage className="text-primary"/>
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -129,7 +127,6 @@ export default function LoginPage({
             <div className="text-left">
               <Link
                 to="/forgot-password"
-                type="button"
                 className="text-muted hover:text-muted/60 text-sm transition-colors"
               >
                 Forgot your password?
@@ -139,9 +136,10 @@ export default function LoginPage({
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-primary hover:bg-primary/80 text-muted font-medium py-3 rounded-lg transition-colors"
+              disabled={isLoading}
+              className="w-full bg-primary hover:bg-primary/80 text-muted font-medium py-3 rounded-lg transition-colors disabled:opacity-60"
             >
-              Sign In
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
 
             {/* Sign up */}
@@ -154,7 +152,6 @@ export default function LoginPage({
                 Sign Up
               </Link>
             </div>
-
           </form>
         </Form>
       </div>

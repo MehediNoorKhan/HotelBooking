@@ -1,43 +1,93 @@
-// authAPI.ts
+// authApi.ts
 
-import { api } from "@/services/api";
-import type { AuthResponse, LoginPayload, SignUpPayload,ForgotPasswordPayload, ForgotPasswordResponse } from "./types";
+import { rtkApi } from "@/services/rtkApi";
+import type {
+  AuthResponse,
+  LoginPayload,
+  SignUpPayload,
+  ForgotPasswordPayload,
+  ForgotPasswordResponse,
+  OtpCheckResponse,
+  OtpCheckPayload,
+  ResetPasswordResponse,
+  ResetPasswordPayload,
+} from "./types";
 
-// Sign Up
-export const signUpAPI = async (
-  data: SignUpPayload
-): Promise<AuthResponse> => {
-  const payload = {
-    name: data.firstName,
-    last_name: data.lastName,
-    email: data.email,
-    phone: data.phone,
-    password: data.password,
-    password_confirmation: data.confirmPassword,
-  };
+export const authApi = rtkApi.injectEndpoints({
+  endpoints: (builder) => ({
+    signup: builder.mutation<AuthResponse, SignUpPayload>({
+      query: (data) => ({
+        url: "/user-signup",
+        method: "POST",
+        body: {
+          name: data.firstName,
+          last_name: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          password: data.password,
+          password_confirmation: data.confirmPassword,
+        },
+      }),
+    }),
 
-  const res = await api.post("/user-signup", payload);
-  return res.data;
-};
+    login: builder.mutation<AuthResponse, LoginPayload>({
+      query: (payload) => ({
+        url: "/user-login",
+        method: "POST",
+        body: payload,
+      }),
+    }),
 
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "/user-logout",
+        method: "POST",
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
 
-// Login 
-export const loginAPI = async (payload: LoginPayload): Promise<AuthResponse> => {
-  const res = await api.post("/user-login", payload);
-  return res.data;
-};
+          // 🧹 Clear ALL cached server state on logout
+          dispatch(rtkApi.util.resetApiState());
+        } catch {
+          // silent fail – backend might already be logged out
+        }
+      },
+    }),
 
-// Logout
-export const logoutAPI = async () => {
-  const res = await api.post("/user-logout");
-  return res.data;
-};
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordPayload>({
+      query: (payload) => ({
+        url: "/forget/password",
+        method: "POST",
+        body: payload,
+      }),
+    }),
 
-// Forgot Password
+    checkOtp: builder.mutation<OtpCheckResponse, OtpCheckPayload>({
+      query: (payload) => ({
+        url: "/otp/check",
+        method: "POST",
+        body: payload,
+      }),
+    }),
 
-export const forgotPasswordAPI = async (
-  payload: ForgotPasswordPayload
-): Promise<ForgotPasswordResponse> => {
-  const res = await api.post("/forget/password", payload);
-  return res.data;
-};
+    resetPassword: builder.mutation<ResetPasswordResponse, ResetPasswordPayload>({
+      query: (payload) => ({
+        url: "/reset/password",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+  }),
+
+  overrideExisting: false,
+});
+
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useForgotPasswordMutation,
+  useCheckOtpMutation,
+  useResetPasswordMutation
+} = authApi;

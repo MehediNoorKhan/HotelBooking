@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../images/logo.png";
 import hamburger from "../../images/hamburger.png";
@@ -14,8 +14,49 @@ export default function Navbar() {
     { label: "Inquiry", path: "/inquiry" },
   ];
 
+// Animation and Sticky part
+
+const [showNavbar, setShowNavbar] = useState(true);
+const [isScrolled, setIsScrolled] = useState(false);
+
+useEffect(() => {
+  let lastScrollY = window.scrollY;
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+
+    // Glass effect trigger
+    setIsScrolled(currentScrollY > 10);
+
+    // Scroll direction logic
+    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      setShowNavbar(false); // scrolling down
+    } else {
+      setShowNavbar(true); // scrolling up
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
+
   return (
-    <div className="w-full relative z-50">
+    <div
+  className={`
+    fixed top-0 left-0 w-full z-50
+    transition-all duration-500 ease-in-out
+    ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+    ${
+      isScrolled
+        ? "backdrop-blur-xs bg-background/20 rounded-b-2xl"
+        : "bg-transparent"
+    }
+  `}
+>
       {/* Top Bar */}
       <div className="flex items-center justify-between px-4 py-4 md:px-6 md:py-5 lg:px-10 lg:py-6 xl:px-[100px] xl:py-[38px]">
         <Link to="/">
@@ -54,11 +95,12 @@ export default function Navbar() {
         </div>
 
         {/* Menu Items */}
-        <nav className="flex flex-col pl-25 pr-10 mt-8 gap-2">
+        <nav className="flex flex-col pl-20 pr-10 pb-6 mt-8 gap-2 bg-foreground rounded-l-lg">
           {menuItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 `relative text-left py-4 text-[20px] ${
                   isActive ? "text-muted font-display italic" : "text-muted hover:text-muted/80"
@@ -82,6 +124,10 @@ export default function Navbar() {
           {/* Sign In */}
           <Link to={"/signin"} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
             Sign In
+          </Link>
+          {/* Sign Up */}
+          <Link to={"/signup"} className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 w-full text-center">
+            Sign Up
           </Link>
         </nav>
       </div>

@@ -5,10 +5,11 @@ export default function Discover() {
     return (
         <div
             className="
+            container
+            mx-auto
                 relative 
                 w-full 
-                px-4
-                xl:px-[100px] 
+                px-4 
                 xl:py-[100px]
                 bg-[#161616]
             "

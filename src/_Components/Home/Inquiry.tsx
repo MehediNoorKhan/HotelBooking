@@ -5,7 +5,8 @@ import inquiryimg from "../../images/inquiryimg.png"
 
 export default function Inquiry() {
   return (
-    <section className="relative w-full bg-[#0F0F0F] text-white px-4 md:px-10 lg:px-20 py-28">
+    <section className="relative 
+ w-full bg-[#0F0F0F] text-muted px-4 md:px-10 lg:px-20 py-28">
 
       {/* Page Title */}
       <div className="mb-12">
@@ -18,8 +19,9 @@ export default function Inquiry() {
       {/* FRAME39 Background behind everything */}
       <div
         className="
-          absolute left-0 right-0 mx-auto
-          w-full md:w-[90%] lg:w-[85%]
+        mx-auto 
+          absolute left-0 right-0 
+          w-full md:w-[90%] lg:w-[85%] 
           h-[650px] md:h-[700px] lg:h-[580px]
           bg-[#ffffff]/9
           z-0

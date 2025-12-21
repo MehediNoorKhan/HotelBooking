@@ -1,7 +1,6 @@
+// apartment api
+
 import { api } from "@/services/api";
-
-
-
 
 import type { Apartment } from "./type";
 export const getAllApartments = async (): Promise<Apartment[]> => {

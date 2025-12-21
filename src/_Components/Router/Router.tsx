@@ -66,12 +66,12 @@ export const router = createBrowserRouter([
             },
             {
                
-                path: "/varification",
+                path: "/verification",
                 element: <VerifyEmailOTP/>
             },
             {
                
-                path: "/update-password",
+                path: "/reset-password",
                 element: <SetNewPassword/>
             },
             {

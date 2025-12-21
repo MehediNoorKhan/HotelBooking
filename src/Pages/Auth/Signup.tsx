@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -17,14 +18,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUpSchema, type SignUpFormData } from "@/types/schema";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { signUp } from "@/features/auth/authThunk";
-import { toast } from "sonner";
+
+import { useAppDispatch } from "@/app/hooks";
+import { setCredentials } from "@/features/auth/authSlice";
+import { useSignupMutation } from "@/features/auth/authAPI";
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const dispatch = useAppDispatch();
+
+  const [signup, { isLoading }] = useSignupMutation();
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -38,20 +44,23 @@ export default function SignUpPage() {
     },
   });
 
-  const onSubmit = (data: SignUpFormData) => {
-    dispatch(signUp(data));
-    console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const res = await signup(data).unwrap();
 
-  };
+      dispatch(
+        setCredentials({
+          user: res.data.user,
+          token: res.data.token,
+        })
+      );
 
-  const navigate = useNavigate();
-  const { isAuthenticated, loading, error } = useAppSelector((s) => s.auth);
-  useEffect(() => {
-    if (isAuthenticated) {
       toast.success("Your account has been created successfully.");
       navigate("/dashboard");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Signup failed");
     }
-  }, [isAuthenticated, navigate]);
+  };
 
   return (
     <div className="min-h-screen bg-neutral-900 text-muted flex items-center justify-center p-4">
@@ -165,11 +174,7 @@ export default function SignUpPage() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
                       >
-                        {showPassword ? (
-                          <EyeOff size={20} />
-                        ) : (
-                          <Eye size={20} />
-                        )}
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                       </button>
                     </div>
                   </FormControl>
@@ -216,15 +221,11 @@ export default function SignUpPage() {
             {/* Submit */}
             <Button
               type="submit"
-              disabled={loading}
+              disabled={isLoading}
               className="w-full bg-primary hover:bg-primary/80 text-muted font-medium py-3 rounded-lg"
             >
-              {loading ? "Creating account..." : "Sign Up"}
+              {isLoading ? "Creating account..." : "Sign Up"}
             </Button>
-
-            {error && (
-              <p className="text-center text-sm text-red-500 mt-2">{error}</p>
-            )}
 
             {/* Sign In */}
             <div className="text-center">

@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.css";
 import carouselimg1 from "@/images/carouselimg1.png";
 import carouselimg2 from "@/images/carouselimg2.png";
 import carouselimg3 from "@/images/carouselimg3.png";
+import { Link } from "react-router";
 
 export default function ChooseUs() {
     const [activeIndex, setActiveIndex] = useState(1);
@@ -19,6 +20,7 @@ export default function ChooseUs() {
     return (
         <div className="
             bg-[#161616]
+            container mx-auto
            
             lg:px-[60px] xl:px-[120px] 2xl:px-1
            md:py-4
@@ -123,7 +125,8 @@ export default function ChooseUs() {
 
                             {/* Only active slide text */}
                             {activeIndex === index && (
-                                <button
+                                <Link
+                                to="/apartments"
                                     className="
                                         bg-white text-black
                                         mt-4
@@ -138,7 +141,7 @@ export default function ChooseUs() {
                                 >
                                     {slide.text}
                                     <span className="text-[18px]">→</span>
-                                </button>
+                                </Link>
                             )}
                         </div>
                     </SwiperSlide>

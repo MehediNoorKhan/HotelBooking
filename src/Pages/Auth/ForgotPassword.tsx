@@ -1,18 +1,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { forgotPassword } from "@/features/auth/authThunk";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
+import { useForgotPasswordMutation } from "@/features/auth/authAPI";
+
 const ForgotPasswordForm: React.FC = () => {
   const [email, setEmail] = React.useState("");
-  const dispatch = useAppDispatch();
-  const { loading} = useAppSelector((state) => state.auth);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // 🔒 simple email validation
+  const [forgotPassword, { isLoading }] =
+    useForgotPasswordMutation();
+
+  //simple email validation
   const isValidEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -28,11 +29,11 @@ const ForgotPasswordForm: React.FC = () => {
     }
 
     try {
-      await dispatch(forgotPassword({ email })).unwrap();
+      await forgotPassword({ email }).unwrap();
       toast.success("OTP sent successfully. Check your email.");
-      navigate('/varification')
-    } catch (err: string | any) {
-      toast.error("Failed to send OTP");
+      navigate("/verification", { state: { email } });
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to send OTP");
     }
   };
 
@@ -66,17 +67,17 @@ const ForgotPasswordForm: React.FC = () => {
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
+              disabled={isLoading}
               className="w-full bg-transparent border border-primary/60 rounded-lg px-4 py-6 text-muted placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
 
           <Button
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={isLoading}
             className="w-full bg-primary hover:bg-primary/80 text-muted font-semibold py-6 rounded-lg transition-colors"
           >
-            {loading ? "Sending OTP..." : "Send OTP"}
+            {isLoading ? "Sending OTP..." : "Send OTP"}
           </Button>
         </div>
 

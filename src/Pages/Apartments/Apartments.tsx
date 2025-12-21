@@ -1,28 +1,15 @@
-import { useEffect, useState } from "react";
-import FeaturedProperties from "../../_Components/Home/FeaturedProperties";
 import ApartmentSearch from "../../_Components/Shared_Component/ApartmentSearch";
 import image from "../../images/apartmentImage.png";
-import { getAllApartments} from "@/features/apartments/apartmentAPI";
-import type { Apartment } from "@/features/apartments/type";
+import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
+import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
 
-const Apartments = () => {
-  const [apartments, setApartments] = useState<Apartment[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchApartments = async () => {
-      try {
-        const data = await getAllApartments();
-        setApartments(data);
-      } catch (err) {
-        console.error("Failed to fetch apartments", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApartments();
-  }, []);
+  
+  const Apartments = () => {
+  const {
+    data: apartments = [],
+    isLoading,
+    isError,
+  } = useGetFeaturedApartmentsQuery();
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,15 +43,13 @@ const Apartments = () => {
 
       {/* Featured Properties */}
       <section className="py-12 sm:py-16 lg:py-20">
-        {loading ? (
-          <p className="text-center text-muted">Loading apartments...</p>
-        ) : (
-          <FeaturedProperties
-            properties={apartments}
-            title="Apartment Listing"
-            subTitle="Handpicked apartments that embody sophistication and comfort in New York's most prestigious locations."
-          />
-        )}
+        <FeaturedProperties
+          properties={apartments}
+          isLoading={isLoading}
+        isError={isError}
+          title="Apartment Listing"
+          subTitle="Handpicked apartments that embody sophistication and comfort in New York's most prestigious locations."
+        />
       </section>
     </div>
   );

@@ -1,8 +1,13 @@
 import image from "@/images/apartmentImage.png";
 import image2 from "@/images/aboutImage2.png";
 import ctaBg from "@/images/CTA image.png";
-
-import { Eye, HomeIcon, Send, ShieldCheck, Target, User } from "lucide-react";
+import quality from "@/assets/Icons/Check.svg"
+import frame from "@/assets/Icons/Frame.svg"
+import home from "@/assets/Icons/Home.svg"
+import avatar from "@/assets/Icons/avater.svg"
+import eye from "@/assets/Icons/eye.svg"
+ 
+import { Send } from "lucide-react";
 
 const AboutPage = () => {
   return (
@@ -70,7 +75,8 @@ const AboutPage = () => {
           <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
       
             <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
-              <Target className="text-black w-10 h-10" />
+              <img src={frame}>
+              </img>
             </div>
 
             <h3 className=" text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
@@ -85,7 +91,8 @@ const AboutPage = () => {
           {/* Card */}
           <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
             <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
-              <Eye className="text-black w-10 h-10" />
+             <img src={eye}>
+              </img>
             </div>
 
             <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
@@ -116,8 +123,8 @@ const AboutPage = () => {
           {/* Card */}
           <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
             <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
-              <HomeIcon className="text-black w-10 h-10" fill="currentColor"
-              stroke="currentColor" />
+              <img src={home}>
+              </img>
             </div>
 
             <h3 className=" text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
@@ -132,7 +139,8 @@ const AboutPage = () => {
           {/* Card */}
           <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
             <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
-              <ShieldCheck className="text-black w-10 h-10" fill="currentColor" />
+              <img src={quality}>
+              </img>
             </div>
 
             <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
@@ -146,7 +154,7 @@ const AboutPage = () => {
           {/* Card */}
           <div className="bg-black p-6 border border-primary rounded-2xl flex flex-col gap-4 text-muted">
             <div className="w-[60px] h-[60px] bg-primary rounded-[10px] flex items-center justify-center">
-              <User className="text-black w-10 h-10" fill="currentColor" />
+              <img src={avatar}></img>
             </div>
 
             <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-[120%]">
@@ -161,7 +169,7 @@ const AboutPage = () => {
         </div>
         {/* CTA */}
       <div
-        className="container mx-auto relative h-[420px] md:h-[520px] rounded-3xl overflow-hidden flex items-center justify-center"
+        className="container mx-auto relative h-80 md:h-80 rounded-3xl overflow-hidden flex items-center justify-center mt-20"
         style={{
           backgroundImage: `url(${ctaBg})`,
           backgroundSize: "cover",
