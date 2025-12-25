@@ -42,10 +42,10 @@ export default function Inquiry() {
           message: "",
         });
       } else {
-        setError("Something went wrong");
+        toast.error("Something went wrong");
       }
     } catch (err) {
-      setError("Failed to send message");
+      toast.error("Failed to send message");
     } finally {
       setLoading(false);
     }

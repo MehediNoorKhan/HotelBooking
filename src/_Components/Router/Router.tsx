@@ -15,6 +15,9 @@ import ForgotPasswordForm from "@/Pages/Auth/ForgotPassword";
 import VerifyEmailOTP from "@/Pages/Auth/VerifyEmailOTP";
 import SetNewPassword from "@/Pages/Auth/SetNewPassword";
 import InquiryPage from "@/Pages/Inquiry/InquiryPage";
+import Terms from "@/Pages/Terms/Terms";
+import Policy from "@/Pages/Policy/Policy";
+import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 
 
 
@@ -78,6 +81,21 @@ export const router = createBrowserRouter([
                
                 path: "/inquiry",
                 element: <InquiryPage/>
+            },
+            {
+               
+                path: "/terms",
+                element: <Terms/>
+            },
+            {
+               
+                path: "/privacy-policy",
+                element: <Policy/>
+            },
+            {
+               
+                path: "/saved-property",
+                element: <SavedProperty/>
             },
         ]
     },

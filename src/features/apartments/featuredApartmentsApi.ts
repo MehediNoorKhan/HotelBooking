@@ -12,4 +12,8 @@ export const featuredApartmentsApi = rtkApi.injectEndpoints({
   overrideExisting: false,
 });
 
+
+
+
+
 export const { useGetFeaturedApartmentsQuery } = featuredApartmentsApi;

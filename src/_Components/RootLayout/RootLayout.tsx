@@ -8,7 +8,10 @@ export default function RootLayout() {
     <div className="bg-foreground">
             <ScrollToTop />
       <Navbar></Navbar>
+      <div className="pt-24">
+
       <Outlet></Outlet>
+      </div>
       <Footer></Footer>
     </div>
   )

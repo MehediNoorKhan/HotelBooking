@@ -7,8 +7,8 @@ interface FeaturedPropertiesProps {
   properties: Apartment[];
   isLoading: boolean;
   isError: boolean;
-  title: string;
-  subTitle: string;
+  title?: string;
+  subTitle?: string;
 }
 
 export default function FeaturedProperties({
@@ -40,7 +40,7 @@ export default function FeaturedProperties({
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="h-[320px] rounded-xl bg-muted/20 animate-pulse"
+              className="h-80 rounded-xl bg-muted/20 animate-pulse"
             />
           ))}
         </div>
@@ -48,7 +48,7 @@ export default function FeaturedProperties({
 
       {/* Error */}
       {isError && (
-        <p className="text-center text-red-500">
+        <p className="text-center text-primary">
           Failed to load featured properties
         </p>
       )}

@@ -42,12 +42,13 @@ export default function PropertyCard({ item, index }: Props) {
       className="bg-background rounded-[12px] overflow-hidden border border-border shadow-sm transition-shadow hover:shadow-lg"
     >
       {/* Image */}
-      <div className="relative w-full h-[200px]">
+      <div className="relative w-full h-[250px]">
         <img
-          src={item.images[0]}
-          className="w-full h-full object-cover rounded-t-[12px]"
-          alt={item.name}
-        />
+    src={item.images?.[0] || "/images/placeholder.jpg"}
+    alt={item.name}
+    className="w-full h-full object-cover rounded-t-[12px]"
+    loading="lazy"
+  />
         <div className="absolute top-2.5 right-2.5 bg-background px-2 py-1.5 rounded-full text-[14px]">
           ${item.pricing.nightly}/<span className="text-[12px]">night</span>
         </div>

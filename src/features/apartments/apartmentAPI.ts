@@ -1,13 +1,25 @@
-// apartment api
+import { rtkApi } from "@/services/rtkApi";
+import type { Apartment, singleApartment } from "./type";
 
-import { api } from "@/services/api";
+export const apartmentsApi = rtkApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllApartments: builder.query<Apartment[], void>({
+      query: () => "/apartments/list",
+      transformResponse: (response: any) => response.data,
+      providesTags: ["Apartments"],
+    }),
 
-import type { Apartment } from "./type";
-export const getAllApartments = async (): Promise<Apartment[]> => {
-  const res = await api.get("/apartments/list"); 
-  return res.data.data; 
-};
+    //  Get single apartment details
+    getApartmentDetails: builder.query<singleApartment, string>({
+      query: (id) => `/apartment/details/${id}`,
+      transformResponse: (response: any) => response.data,
+      providesTags: (_result, _error, id) => [{ type: "Apartments", id }],
+    }),
+  }),
+  overrideExisting: false,
+});
 
-// Single Apartment Details
-export const getApartmentDetails = (id: string) =>
-  api.get(`/apartment/details/${id}`);
+export const {
+  useGetAllApartmentsQuery,
+  useGetApartmentDetailsQuery,
+} = apartmentsApi;

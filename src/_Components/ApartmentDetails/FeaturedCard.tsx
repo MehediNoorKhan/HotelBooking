@@ -12,7 +12,7 @@ import { Link } from "react-router";
 import type { Apartment } from "@/features/apartments/type";
 
 interface FeaturedPropertiesProps {
-  properties: Apartment[];
+  properties: Apartment[] ;
   title?: string;
   subTitle?: string;
 }

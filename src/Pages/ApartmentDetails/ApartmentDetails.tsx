@@ -2,43 +2,42 @@ import Carousel from "./Carousel";
 import { Heart, Send, Share2 } from "lucide-react";
 import PropertyInfo from "./PropertyInfo";
 import BookingForm, { type BookingFormData } from "./BookingForm";
-// import FeaturedProperties from "../../_Components/Home/FeaturedProperties";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
 import ApartmentDetailsSkeleton from "../../_Components/ApartmentDetails/ApartmentDetailsSkeleton";
 import ctaBg from "@/images/CTA image.png";
-import type { Apartment } from "@/features/apartments/type";
-import { getApartmentDetails } from "@/features/apartments/apartmentAPI";
 import FeaturedCard from "@/_Components/ApartmentDetails/FeaturedCard";
+import { useLazyGetApartmentShareQuery } from "@/services/apartmentShareApi";
+import { toast } from "sonner";
+import { useGetApartmentDetailsQuery } from "@/features/apartments/apartmentAPI";
+import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
 
 const ApartmentDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(true);
-  const [apartment, setApartment] = useState<Apartment | null>(null);
 
-  useEffect(() => {
-    if (!id) return;
+  //  RTK Query for details
+  const { data: apartment, isLoading, isError } = useGetApartmentDetailsQuery(id!, {
+    skip: !id,
+  });
 
-    window.scrollTo(0, 0);
+  // Apartment
+  const { data: apartments} = useGetFeaturedApartmentsQuery()
 
-    const fetchApartment = async () => {
-      try {
-        setLoading(true);
+  //  Share API
+  const [getShareUrl, { isFetching: isSharing }] =
+    useLazyGetApartmentShareQuery();
 
-        const res = await getApartmentDetails(id);
-        setApartment(res.data.data);
-       
-      } catch (error) {
-        console.error("Failed to load apartment details", error);
-        setApartment(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleShare = async () => {
+    if (!apartment?.id) return;
 
-    fetchApartment();
-    
-  }, [id]);
+    try {
+      const res = await getShareUrl(apartment.id).unwrap();
+      const shareUrl = res.data.share_url;
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success("Share link copied to clipboard!");
+    } catch {
+      toast.error("Failed to copy share link");
+    }
+  };
 
   const handleBookingSubmit = (data: BookingFormData) => {
     console.log("Booking submitted:", data);
@@ -47,12 +46,21 @@ const ApartmentDetails = () => {
     );
   };
 
-  if (loading) return <ApartmentDetailsSkeleton />;
+  //  Loading
+  if (isLoading) return <ApartmentDetailsSkeleton />;
 
-  if (!apartment) {
-    return <div className="p-10 text-center text-muted mb-[110px]">Apartment not found</div>;
+  //  Error / Not found
+  if (isError || !apartment) {
+    return (
+      <div className="p-10 text-center text-muted mb-[110px]">
+        Apartment not found
+      </div>
+    );
   }
- console.log(apartment)
+
+  // Flatten amenities for easier display
+  const amenities = Object.values(apartment.amenities_by_category ?? {}).flat();
+
   return (
     <div className="bg-foreground">
       {/* Image Carousel */}
@@ -81,8 +89,15 @@ const ApartmentDetails = () => {
             <button className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center">
               <Heart size={18} /> Save
             </button>
-            <button className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center">
-              <Share2 size={18} /> Share
+
+            <button
+              onClick={handleShare}
+              disabled={isSharing}
+              className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center
+              disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Share2 size={18} />
+              {isSharing ? "Sharing..." : "Share"}
             </button>
           </div>
         </div>
@@ -98,17 +113,18 @@ const ApartmentDetails = () => {
       <div className="container mx-auto pb-[50px] px-4 sm:px-6 lg:px-8">
         <div className="flex gap-6 flex-wrap">
           <PropertyInfo
-            monthlyRate={`$${apartment.pricing.monthly}`}
+            monthlyRate={`$${apartment.price.monthly}`}
             bedrooms={String(apartment.bedrooms)}
             bathrooms={String(apartment.bathrooms)}
             guestCapacity={String(apartment.max_guests)}
             squareFootage={`${apartment.square_feet} sq ft`}
             location={apartment.full_address}
-            description = {apartment.description}
+            description={apartment.description}
+            amenities={amenities} // pass flattened amenities if your PropertyInfo supports it
           />
 
           <BookingForm
-            monthlyRate={`$${apartment.pricing.monthly}`}
+            monthlyRate={`$${apartment.price.monthly}`}
             minimumStay="30 days"
             onSubmit={handleBookingSubmit}
           />
@@ -116,9 +132,9 @@ const ApartmentDetails = () => {
       </div>
 
       {/* Featured Properties */}
-      <div className="container mx-auto pb-[50px]">
+      <div className="container mx-auto pb-[50px] sm:px-4">
         <FeaturedCard
-          properties={[apartment]}
+          properties={apartments||[]}
           title="Featured Property"
           subTitle="Handpicked apartments that embody sophistication and comfort."
         />

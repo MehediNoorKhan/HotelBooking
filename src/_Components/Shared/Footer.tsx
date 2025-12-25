@@ -6,9 +6,10 @@ import logo from "../../images/logo.png";
 import { Link } from "react-router";
 
 export default function Footer() {
+  
   return (
-    <footer className="bg-foreground textprimarygray pt-16">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer className="bg-black/90 textprimarygray pt-16 mt-20">
+      <div className="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-12">
         {/* LEFT LOGO & TEXT */}
         <div>
           <img src={logo} className="xl:w-[58px] xl:h-[58px] xl:mb-4" />
@@ -111,7 +112,7 @@ export default function Footer() {
           <ul className="space-y-3">
             <li className="cursor-pointer hover:text-muted transition">
               <Link
-                to="/"
+                to="/terms"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="cursor-pointer hover:text-muted transition"
               >
@@ -122,7 +123,7 @@ export default function Footer() {
 
             <li className="cursor-pointer hover:text-muted transition">
               <Link
-                to="/"
+                to="/privacy-policy"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="cursor-pointer hover:text-muted transition"
               >
@@ -147,7 +148,7 @@ export default function Footer() {
       </div>
 
       {/* BOTTOM COPYRIGHT BAR */}
-      <div className="max-w-7xl mx-auto border-t border-background/10 bg-foreground mt-6 xl:mt-12">
+      <div className="max-w-7xl mx-auto border-t border-background/10 bg-black/90 mt-6 xl:mt-12">
         <p className="text-center py-6 textprimarygray">
           © 2025. All rights reserved.
         </p>

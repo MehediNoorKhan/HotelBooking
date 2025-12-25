@@ -16,6 +16,8 @@ import {
 } from "../../components/animate-ui/components/buttons/ripple";
 import { toast } from "sonner";
 
+import { useCreateBookingMutation } from "@/services/bookingApi";
+
 interface BookingFormProps {
   monthlyRate?: string;
   minimumStay?: string;
@@ -67,14 +69,26 @@ const BookingForm: React.FC<BookingFormProps> = ({
   // Local state for Calendar popup
   const [checkInDate, setCheckInDate] = useState<Date | undefined>();
   const [checkOutDate, setCheckOutDate] = useState<Date | undefined>();
+  const [createBooking, { isLoading }] = useCreateBookingMutation();
 
-  const submitHandler = (data: BookingFormData) => {
-    if (data.checkIn && data.checkOut) {
-      // Here will be the logic to handle form submission, e.g., calling onSubmit prop
-      console.log("Booking submitted:", data);
-    
-    toast.success("Booking request submitted! Our team will contact you within 24 hours.");
-      return;
+  const submitHandler = async (data: BookingFormData) => {
+    try {
+      await createBooking({
+        check_in: data.checkIn,
+        check_out: data.checkOut,
+        full_name: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        message: data.message,
+      }).unwrap();
+
+      toast.success(
+        "Booking request submitted! Our team will contact you within 24 hours."
+      );
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Something went wrong. Please try again."
+      );
     }
   };
 
@@ -245,13 +259,13 @@ const BookingForm: React.FC<BookingFormProps> = ({
         {/* Submit button */}
         <RippleButton
           type="submit"
-          className=" h-14
-            bg-foreground border border-border/30 text-muted 
-            rounded-lg py-4 text-[16px] font-medium mt-2
-            hover:bg-primary hover:border-primary transition
-          "
+          disabled={isLoading}
+          className="h-14 bg-foreground border border-border/30 text-muted 
+             rounded-lg py-4 text-[16px] font-medium mt-2
+             hover:bg-primary hover:border-primary transition
+             disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Booking
+          {isLoading ? "Booking..." : "Booking"}
           <RippleButtonRipples />
         </RippleButton>
         {/* Disclaimer */}

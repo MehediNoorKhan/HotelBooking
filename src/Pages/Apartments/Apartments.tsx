@@ -1,15 +1,17 @@
+import { useGetAllApartmentsQuery } from "@/features/apartments/apartmentAPI";
 import ApartmentSearch from "../../_Components/Shared_Component/ApartmentSearch";
 import image from "../../images/apartmentImage.png";
 import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
-import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
 
-  
-  const Apartments = () => {
+const Apartments = () => {
   const {
     data: apartments = [],
     isLoading,
     isError,
-  } = useGetFeaturedApartmentsQuery();
+  } = useGetAllApartmentsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+   console.log(apartments);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,8 +19,10 @@ import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApa
       <section className="pt-16 sm:pt-20 lg:pt-24 pb-20 flex flex-col items-center">
         {/* Text */}
         <div className="font-display text-center max-w-7xl flex flex-col gap-6">
-          <h1 className="text-muted font-display font-bold 
-                         text-[32px] sm:text-[40px] lg:text-[54px] leading-[120%]">
+          <h1
+            className="text-muted font-display font-bold 
+            text-[32px] sm:text-[40px] lg:text-[54px] leading-[120%]"
+          >
             Explore Our Luxury Apartments in New York
           </h1>
 
@@ -34,6 +38,7 @@ import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApa
             src={image}
             alt="Luxury Apartment"
             className="w-full h-[220px] sm:h-[360px] lg:h-[450px] object-cover"
+            loading="lazy"
           />
         </div>
 
@@ -46,7 +51,7 @@ import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApa
         <FeaturedProperties
           properties={apartments}
           isLoading={isLoading}
-        isError={isError}
+          isError={isError}
           title="Apartment Listing"
           subTitle="Handpicked apartments that embody sophistication and comfort in New York's most prestigious locations."
         />

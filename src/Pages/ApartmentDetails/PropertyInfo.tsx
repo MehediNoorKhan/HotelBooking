@@ -2,6 +2,12 @@ import { BathIcon, BedDouble, DollarSign, MoveDiagonal, MapPin, UsersRoundIcon }
 import React from "react";
 import StatCard from "./StatCardProps";
 
+interface Amenity {
+  id: number;
+  name: string;
+  icon?: string;
+}
+
 interface PropertyInfoProps {
   monthlyRate?: string;
   bedrooms?: string;
@@ -9,7 +15,8 @@ interface PropertyInfoProps {
   guestCapacity?: string;
   squareFootage?: string;
   location?: string;
-  description:string;
+  description: string;
+  amenities?: Amenity[]; // New prop
 }
 
 const PropertyInfo: React.FC<PropertyInfoProps> = ({
@@ -19,7 +26,8 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
   guestCapacity = "",
   squareFootage = "",
   location = "",
-  description=''
+  description = "",
+  amenities = [],
 }) => {
   return (
     <div className="flex flex-col gap-6 flex-1 min-w-[320px]">
@@ -46,49 +54,34 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
         </h2>
 
         <div className="text-muted leading-[1.8]">
-          <p className="mb-4 text-[14px]">
-            {description}
-          </p>
+          <p className="mb-4 text-[14px]">{description}</p>
         </div>
       </div>
 
       {/* Apartment Amenities Section */}
-      <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
-        <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
-          Apartment Amenities
-        </h2>
+      {amenities.length > 0 && (
+        <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
+          <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
+            Apartment Amenities
+          </h2>
 
-        <div className="flex flex-wrap gap-3">
-          <StatCard icon={<BedDouble className="text-primary w-6 h-6" />} label="Bedrooms" />
-          <StatCard icon={<BathIcon className="text-primary w-6 h-6" />} label="Bathrooms" />
-          <StatCard icon={<UsersRoundIcon className="text-primary w-6 h-6" />} label="Guest Capacity" />
-          <StatCard icon={<MoveDiagonal className="text-primary w-6 h-6" />} label="Square Footage" />
-          <StatCard icon={<MapPin className="text-primary w-6 h-6" />} label="Location"/>
-          <StatCard icon={<BedDouble className="text-primary w-6 h-6" />} label="Bedrooms" />
-          <StatCard icon={<BathIcon className="text-primary w-6 h-6" />} label="Bathrooms" />
-          <StatCard icon={<UsersRoundIcon className="text-primary w-6 h-6" />} label="Guest Capacity" />
-          <StatCard icon={<MoveDiagonal className="text-primary w-6 h-6" />} label="Square Footage" />
+          <div className="flex flex-wrap gap-3">
+            {amenities.map((a) => (
+              <StatCard
+                key={a.id}
+                icon={
+                  a.icon ? (
+                    <img src={a.icon} className="w-6 h-6 object-contain" />
+                  ) : (
+                    <BedDouble className="text-primary w-6 h-6" />
+                  )
+                }
+                label={a.name}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-
-      {/* Building Amenities */}
-      <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
-        <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
-          Building Amenities
-        </h2>
-
-        <div className="flex flex-wrap gap-3">
-          <StatCard icon={<BedDouble className="text-primary w-6 h-6" />} label="Bedrooms" />
-          <StatCard icon={<BathIcon className="text-primary w-6 h-6" />} label="Bathrooms"/>
-          <StatCard icon={<UsersRoundIcon className="text-primary w-6 h-6" />} label="Guest Capacity"/>
-          <StatCard icon={<MoveDiagonal className="text-primary w-6 h-6" />} label="Square Footage" />
-          <StatCard icon={<MapPin className="text-primary w-6 h-6" />} label="Location"/>
-          <StatCard icon={<MoveDiagonal className="text-primary w-6 h-6" />} label="Square Footage" />
-          <StatCard icon={<MapPin className="text-primary w-6 h-6" />} label="Location"/>
-        </div>
-      </div>
-
-      
+      )}
     </div>
   );
 };

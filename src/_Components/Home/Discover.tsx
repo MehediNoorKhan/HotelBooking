@@ -26,8 +26,8 @@ export default function Discover() {
                         h-[480px] 
                         md:h-[550px] 
                         lg:h-[700px] 
-                        xl:h-[750px]
-                        object-cover
+                        xl:h-[750px] 
+                        object-cover 
                         rounded-[13px]
                     "
                 />
