@@ -16,6 +16,7 @@ export default function Navbar() {
     { label: "About", path: "/about" },
     { label: "FAQ", path: "/faq" },
     { label: "Inquiry", path: "/inquiry" },
+    { label: "Go to Dashboard", path: "/dashboard" },
   ];
 
   /* ---------------- Scroll Logic ---------------- */

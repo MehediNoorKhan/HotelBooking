@@ -1,14 +1,51 @@
-
-import DashboardLayout from "@/_Components/Dashboard/DashboardLayout";
 import StayCard from "@/_Components/Dashboard/StayCard";
-import { recentInquiries, upcomingStay } from "@/data/stays";
-import { dashboardStats } from "@/data/Stats";
 import StatsCard from "@/_Components/Dashboard/StatsCard";
+import { useGetDashboardDataQuery } from "@/features/dashboard/mainDashboard";
+import type { Booking, StatsCardData } from "@/types";
+import { FileText, Clock, Calendar } from "lucide-react";
+import { mapBookingToStay } from "@/lib/mapBookingToStay";
 
 const DashboardHome = () => {
+
+  
+  // Fetch dashboard data
+  const { data, isLoading, error } = useGetDashboardDataQuery();
+
+  // Handle loading state
+   if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
+  if (!data?.message) return <p>Invalid data</p>;
+
+  // Extract data safely
+  const stats = data.message.stats;
+  const upcomingBookings: Booking[] = data.message.upcoming_bookings ?? [];
+  const recentBookings: Booking[] = data.message.recent_bookings || [];
+
+  // Map API stats to include icons
+  const statsCards: StatsCardData[] = [
+    {
+      label: "Total Inquiries",
+      value: stats.total_inquiries,
+      helperText: "All time",
+      icon: FileText,
+    },
+    {
+      label: "Pending Inquiries",
+      value: stats.pending_inquiries,
+      helperText: "Awaiting review",
+      icon: Clock,
+    },
+    {
+      label: "Confirmed Stays",
+      value: stats.confirmed_inquiries,
+      helperText: "Upcoming",
+      icon: Calendar,
+    },
+  ];
+
   return (
-    <DashboardLayout>
-      <div className="max-h-screen bg-foreground text-muted">
+    // <DashboardLayout>
+      <div className="max-h-screen bg-foreground text-muted p-8">
         {/* Header */}
         <div className="mb-8">
           <p className="text-primary text-base">Welcome back</p>
@@ -22,38 +59,53 @@ const DashboardHome = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          {dashboardStats.map((stat) => (
+          {statsCards.map((stat) => (
             <StatsCard key={stat.label} {...stat} />
           ))}
         </div>
 
-        {/* Upcoming Stay */}
+        {/* Upcoming Bookings */}
         <div className="mb-7.5">
           <div className="mb-5">
-            <h1 className="text-[34px] font-semibold leading-[120%] text-muted">
-              Upcoming Stay
-            </h1>
+            <h2 className="text-[34px] font-semibold leading-[120%] text-muted">
+              Upcoming Bookings
+            </h2>
             <div className="h-0.5 w-20 bg-primary mt-1"></div>
           </div>
-          <StayCard stay={upcomingStay} />
+
+          {upcomingBookings.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {upcomingBookings.map((booking) => (
+                <StayCard key={booking.booking_id} stay={mapBookingToStay(booking)}
+      variant="large" />
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted/50">No upcoming bookings.</p>
+          )}
         </div>
 
-        {/* Recent Inquiries */}
+        {/* Recent Bookings */}
         <div>
           <div className="mb-5">
-            <h1 className="text-[34px] font-semibold leading-[120%] text-muted">
-              Recent Inquiries
-            </h1>
+            <h2 className="text-[34px] font-semibold leading-[120%] text-muted">
+              Recent Bookings
+            </h2>
             <div className="h-0.5 w-20 bg-primary mt-1"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {recentInquiries.map((stay) => (
-              <StayCard key={stay.id} stay={stay} variant="small" />
-            ))}
-          </div>
+
+          {recentBookings.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {recentBookings.map((booking) => (
+                <StayCard key={booking.booking_id} stay={mapBookingToStay(booking)} variant="small" />
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted/50">No recent bookings.</p>
+          )}
         </div>
       </div>
-    </DashboardLayout>
+    // </DashboardLayout>
   );
 };
 

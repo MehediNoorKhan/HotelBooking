@@ -12,6 +12,7 @@ import type {
   ResetPasswordResponse,
   ResetPasswordPayload,
 } from "./types";
+import { clearAuth } from "./authSlice";
 
 export const authApi = rtkApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -44,15 +45,13 @@ export const authApi = rtkApi.injectEndpoints({
         method: "POST",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
+    try {
+      await queryFulfilled;
 
-          // 🧹 Clear ALL cached server state on logout
-          dispatch(rtkApi.util.resetApiState());
-        } catch {
-          // silent fail – backend might already be logged out
-        }
-      },
+      dispatch(clearAuth());
+      dispatch(rtkApi.util.resetApiState());
+    } catch {}
+  },
     }),
 
     forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordPayload>({

@@ -1,7 +1,7 @@
-import DashboardLayout from "@/_Components/Dashboard/DashboardLayout";
 import InquiryFilter from "@/_Components/Dashboard/FilterOptions";
-import StayCard from "@/_Components/Dashboard/StayCard";
-import { recentInquiries } from "@/data/stays";
+// import StayCard from "@/_Components/Dashboard/StayCard";
+import { ScrollArea } from "@/components/ui/scroll-area";
+// import { recentInquiries } from "@/data/stays";
 import type { InquiryStatus } from "@/types";
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ const DashboardHome = () => {
     const [filter, setFilter] = useState<InquiryStatus>("all");
 
   return (
-    <DashboardLayout>
+    <ScrollArea className="flex-1">
       <div className="max-h-screen bg-foreground text-muted">
         {/* Header */}
         <div className="mb-8">
@@ -34,13 +34,13 @@ const DashboardHome = () => {
             <div className="h-0.5 w-20 bg-primary mt-1"></div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {recentInquiries.map((stay) => (
+            {/* {recentInquiries.map((stay) => (
               <StayCard key={stay.id} stay={stay} variant="small" />
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
-    </DashboardLayout>
+      </ScrollArea>
   );
 };
 

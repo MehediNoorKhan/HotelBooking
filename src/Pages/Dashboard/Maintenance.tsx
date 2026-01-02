@@ -1,5 +1,4 @@
 import { useState } from "react";
-import DashboardLayout from "@/_Components/Dashboard/DashboardLayout";
 import MaintenanceCard from "@/_Components/Dashboard/MaintenanceCard";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -36,7 +35,6 @@ const Maintenance = () => {
   };
 
   return (
-    <DashboardLayout>
       <ScrollArea className="flex-1">
         <div className="bg-foreground text-muted p-6">
           {/* Header */}
@@ -51,9 +49,16 @@ const Maintenance = () => {
             </div>
             <button
               onClick={handleNewRequest}
-              className="inline-flex items-center gap-2 bg-primary text-background hover:bg-primary/90 px-4 py-2 rounded-lg font-medium"
+              className="
+    inline-flex items-center gap-2
+    bg-primary text-background hover:bg-primary/90
+    rounded-lg font-medium
+    px-3 py-1.5 text-sm
+    sm:px-4 sm:py-2 sm:text-base
+  "
             >
-              <PlusIcon /> New Request
+              <PlusIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>New Request</span>
             </button>
           </div>
 
@@ -61,7 +66,10 @@ const Maintenance = () => {
           {showForm && (
             <div className="mb-6 w-full">
               <MaintenanceForm
-                bookings={requests.map((r) => ({ id: r.bookingId, name: r.title }))}
+                bookings={requests.map((r) => ({
+                  id: r.bookingId,
+                  name: r.title,
+                }))}
                 categories={["Plumbing", "Electrical", "Appliances", "Other"]}
                 onSubmit={handleSubmitForm}
                 onCancel={handleCancel}
@@ -77,7 +85,6 @@ const Maintenance = () => {
           </div>
         </div>
       </ScrollArea>
-    </DashboardLayout>
   );
 };
 

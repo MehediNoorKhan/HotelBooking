@@ -8,7 +8,7 @@ import FaqPage from "@/Pages/FAQ/FaqPage";
 import DashboardHome from "@/Pages/Dashboard/DashboardHome";
 import MyBookings from "@/Pages/Dashboard/MyBookings";
 import Maintenance from "@/Pages/Dashboard/Maintenance";
-// import Profile from "@/Pages/Dashboard/Profile";
+import Profile from "@/Pages/Dashboard/Profile";
 import LoginPage from "@/Pages/Auth/Login";
 import SignUpPage from "@/Pages/Auth/Signup";
 import ForgotPasswordForm from "@/Pages/Auth/ForgotPassword";
@@ -19,107 +19,100 @@ import Terms from "@/Pages/Terms/Terms";
 import Policy from "@/Pages/Policy/Policy";
 import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 
-
-
+// Added imports for protection and layout
+import  ProtectedRoute  from "./ProtectedRoute"; 
+import DashboardLayout from "../Dashboard/DashboardLayout"; 
 
 export const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <RootLayout></RootLayout>,
-        children: [
-            {
-                index: true,
-  element: <Home />,
-            },
-            {
-                
-                path: "/apartment/:id",
-                element: <ApartmentDetails/>
-            },
-            {
-               
-                path: "/apartments",
-                element: <Apartments/>
-            }
-            ,
-            {
-              
-                path: "/about",
-                element: <AboutPage/>
-            },
-            {
-               
-                path: "/faq",
-                element: <FaqPage/>
-            },
-            {
-               
-                path: "/signup",
-                element: <SignUpPage/>
-            },
-            {
-              
-              path: "/signin",
-              element: <LoginPage/>
-            },
-            {
-               
-                path: "/forgot-password",
-                element: <ForgotPasswordForm/>
-            },
-            {
-               
-                path: "/verification",
-                element: <VerifyEmailOTP/>
-            },
-            {
-               
-                path: "/reset-password",
-                element: <SetNewPassword/>
-            },
-            {
-               
-                path: "/inquiry",
-                element: <InquiryPage/>
-            },
-            {
-               
-                path: "/terms",
-                element: <Terms/>
-            },
-            {
-               
-                path: "/privacy-policy",
-                element: <Policy/>
-            },
-            {
-               
-                path: "/saved-property",
-                element: <SavedProperty/>
-            },
-        ]
-    },
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "apartment/:id",
+        element: <ApartmentDetails />,
+      },
+      {
+        path: "apartments",
+        element: <Apartments />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
+      },
+      {
+        path: "faq",
+        element: <FaqPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
+      },
+      {
+        path: "signin",
+        element: <LoginPage />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPasswordForm />,
+      },
+      {
+        path: "verification",
+        element: <VerifyEmailOTP />,
+      },
+      {
+        path: "reset-password",
+        element: <SetNewPassword />,
+      },
+      {
+        path: "inquiry",
+        element: <InquiryPage />,
+      },
+      {
+        path: "terms",
+        element: <Terms />,
+      },
+      {
+        path: "privacy-policy",
+        element: <Policy />,
+      },
+      {
+        path: "saved-property",
+        element: <SavedProperty />,
+      },
+    ],
+  },
 
-    // Dashboard routes (add later with protected route)
-    {
-  path: "/dashboard",
-  children: [
-    {
-      index: true,
-      element: <DashboardHome />,
-    },
-    {
-      path: "bookings",
-      element: <MyBookings />,
-    },
-    {
-      path: "maintenance",
-      element: <Maintenance />,
-    },
-    {
-      path: "profile",
-      // element: <Profile />,
-    },
-  ],
-}
+  // Protected Dashboard routes
+  {
+    path: "/dashboard",
+    element: <ProtectedRoute />, // Wraps all dashboard routes with authentication check
+    children: [
+      {
+        element: <DashboardLayout />, // Applies the dashboard layout to all child routes
+        children: [
+          {
+            index: true,
+            element: <DashboardHome />,
+          },
+          {
+            path: "bookings",
+            element: <MyBookings />,
+          },
+          {
+            path: "maintenance",
+            element: <Maintenance />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
