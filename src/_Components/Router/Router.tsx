@@ -19,9 +19,10 @@ import Terms from "@/Pages/Terms/Terms";
 import Policy from "@/Pages/Policy/Policy";
 import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 
-// Added imports for protection and layout
-import  ProtectedRoute  from "./ProtectedRoute"; 
+// Added imports for protection, layout, and 404
+import ProtectedRoute from "./ProtectedRoute"; 
 import DashboardLayout from "../Dashboard/DashboardLayout"; 
+import NotFound from "@/Pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,11 @@ export const router = createBrowserRouter([
       {
         path: "saved-property",
         element: <SavedProperty />,
+      },
+      // Add this catch-all route for 404 errors
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

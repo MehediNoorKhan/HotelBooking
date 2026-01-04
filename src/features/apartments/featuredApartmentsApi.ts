@@ -6,6 +6,7 @@ export const featuredApartmentsApi = rtkApi.injectEndpoints({
     getFeaturedApartments: builder.query<Apartment[], void>({
       query: () => "/featured/apartments",
       transformResponse: (response: any) => response.data, // extract the array
+      providesTags: ["FeaturedApartments"], // use base API tag
     }),
   }),
   overrideExisting: false,

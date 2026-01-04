@@ -1,7 +1,7 @@
 import Carousel from "./Carousel";
 import { Heart, Send, Share2 } from "lucide-react";
 import PropertyInfo from "./PropertyInfo";
-import BookingForm, { type BookingFormData } from "./BookingForm";
+import BookingForm from "./BookingForm";
 import { useParams } from "react-router";
 import ApartmentDetailsSkeleton from "../../_Components/ApartmentDetails/ApartmentDetailsSkeleton";
 import ctaBg from "@/images/CTA image.png";
@@ -14,15 +14,16 @@ import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApa
 const ApartmentDetails = () => {
   const { id } = useParams<{ id: string }>();
 
-  //  RTK Query for details
-  const { data: apartment, isLoading, isError } = useGetApartmentDetailsQuery(id!, {
+  const {
+    data: apartment,
+    isLoading,
+    isError,
+  } = useGetApartmentDetailsQuery(id!, {
     skip: !id,
   });
 
-  // Apartment
-  const { data: apartments} = useGetFeaturedApartmentsQuery()
+  const { data: apartments = [] } = useGetFeaturedApartmentsQuery();
 
-  //  Share API
   const [getShareUrl, { isFetching: isSharing }] =
     useLazyGetApartmentShareQuery();
 
@@ -31,25 +32,15 @@ const ApartmentDetails = () => {
 
     try {
       const res = await getShareUrl(apartment.id).unwrap();
-      const shareUrl = res.data.share_url;
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(res.data.share_url);
       toast.success("Share link copied to clipboard!");
     } catch {
       toast.error("Failed to copy share link");
     }
   };
 
-  const handleBookingSubmit = (data: BookingFormData) => {
-    console.log("Booking submitted:", data);
-    alert(
-      "Booking request submitted! Our team will contact you within 24 hours."
-    );
-  };
-
-  //  Loading
   if (isLoading) return <ApartmentDetailsSkeleton />;
 
-  //  Error / Not found
   if (isError || !apartment) {
     return (
       <div className="p-10 text-center text-muted mb-[110px]">
@@ -58,7 +49,6 @@ const ApartmentDetails = () => {
     );
   }
 
-  // Flatten amenities for easier display
   const amenities = Object.values(apartment.amenities_by_category ?? {}).flat();
 
   return (
@@ -68,10 +58,9 @@ const ApartmentDetails = () => {
         <Carousel images={apartment.images ?? []} />
       </div>
 
-      {/* Details Section */}
+      {/* Details */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="pt-7.5 pb-2.5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-          {/* Left Content */}
           <div>
             {apartment.is_featured && (
               <span className="inline-block h-[30px] px-3 py-1.5 rounded-[92px] bg-primary text-accent-foreground text-[14px] font-medium">
@@ -84,7 +73,6 @@ const ApartmentDetails = () => {
             </h2>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex gap-3">
             <button className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center">
               <Heart size={18} /> Save
@@ -102,14 +90,13 @@ const ApartmentDetails = () => {
           </div>
         </div>
 
-        {/* Description */}
         <p className="text-muted leading-[1.7] text-[14px] sm:text-[16px]">
           {apartment.short_description ||
             "No description available for this apartment."}
         </p>
       </div>
 
-      {/* Info Section */}
+      {/* Info */}
       <div className="container mx-auto pb-[50px] px-4 sm:px-6 lg:px-8">
         <div className="flex gap-6 flex-wrap">
           <PropertyInfo
@@ -120,21 +107,20 @@ const ApartmentDetails = () => {
             squareFootage={`${apartment.square_feet} sq ft`}
             location={apartment.full_address}
             description={apartment.description}
-            amenities={amenities} // pass flattened amenities if your PropertyInfo supports it
+            amenities={amenities}
           />
 
           <BookingForm
-            monthlyRate={`$${apartment.price.monthly}`}
-            minimumStay="30 days"
-            onSubmit={handleBookingSubmit}
+            apartmentId={apartment.id}
+            monthlyPrice={apartment.price.monthly}
           />
         </div>
       </div>
 
-      {/* Featured Properties */}
+      {/* Featured */}
       <div className="container mx-auto pb-[50px] sm:px-4">
         <FeaturedCard
-          properties={apartments||[]}
+          properties={apartments}
           title="Featured Property"
           subTitle="Handpicked apartments that embody sophistication and comfort."
         />
