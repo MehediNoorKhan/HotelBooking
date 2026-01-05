@@ -1,47 +1,55 @@
 import InquiryFilter from "@/_Components/Dashboard/FilterOptions";
-// import StayCard from "@/_Components/Dashboard/StayCard";
+import StayCard from "@/_Components/Dashboard/StayCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import { recentInquiries } from "@/data/stays";
-import type { InquiryStatus } from "@/types";
+import type { InquiryStatus, Booking } from "@/types";
 import { useState } from "react";
+import { mapBookingToStay } from "@/lib/mapBookingToStay";
+import { useGetUserBookingDataQuery } from "@/features/dashboard/booking";
 
-const DashboardHome = () => {
+const MyBooking = () => {
+  const [filter, setFilter] = useState<InquiryStatus>("all");
 
-    const [filter, setFilter] = useState<InquiryStatus>("all");
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useGetUserBookingDataQuery(filter);
+
+  const bookings: Booking[] = data?.data ?? [];
 
   return (
     <ScrollArea className="flex-1">
       <div className="max-h-screen bg-foreground text-muted">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[34px] font-semibold leading-[120%] text-muted">
-            My Bookings
-          </h1>
+          <h1 className="text-[34px] font-semibold">My Bookings</h1>
           <p className="text-muted/50">
             View and track all your inquiries and confirmed stays
           </p>
         </div>
 
-        {/* Filter part */}
+        {/* Filter */}
         <InquiryFilter value={filter} onChange={setFilter} />
 
-        {/* Card */}
-        <div>
-          <div className="mb-5">
-            <h1 className="text-[34px] font-semibold leading-[120%] text-muted">
-              Recent Inquiries
-            </h1>
-            <div className="h-0.5 w-20 bg-primary mt-1"></div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* {recentInquiries.map((stay) => (
-              <StayCard key={stay.id} stay={stay} variant="small" />
-            ))} */}
-          </div>
+        {/* Cards */}
+        {isLoading && <p>Loading bookings...</p>}
+        {isError && <p>Failed to load bookings.</p>}
+        {!isLoading && !isError && bookings.length === 0 && (
+          <p>No bookings found.</p>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {bookings.map((booking) => (
+            <StayCard
+              key={booking.booking_id}
+              stay={mapBookingToStay(booking)}
+              variant="small"
+            />
+          ))}
         </div>
       </div>
-      </ScrollArea>
+    </ScrollArea>
   );
 };
 
-export default DashboardHome;
+export default MyBooking;

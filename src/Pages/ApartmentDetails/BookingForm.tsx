@@ -13,12 +13,19 @@ import { useCreateBookingMutation } from "@/features/bookingApartment/bookingApi
 import { useGetApartmentCalendarQuery } from "@/features/apartments/apartmentAPI";
 import type { BookingFormData, BookingFormProps } from "@/types";
 import { data } from "react-router";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BookingForm: React.FC<BookingFormProps> = ({ apartmentId, monthlyPrice }) => {
   const { data: calendarData } = useGetApartmentCalendarQuery(apartmentId);
   console.log(data);
   const calendar = calendarData || { unavailable_dates: [], minimum_stay: 30 };
   const MIN_STAY_DAYS = calendarData?.minimum_stay || 30;
+  const [checkInPopoverOpen, setCheckInPopoverOpen] = useState(false);
+  const [checkOutPopoverOpen, setCheckOutPopoverOpen] = useState(false);
+  
+
 
   // Convert unavailable dates to a Set for fast lookup
 const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [calendar]);
@@ -51,6 +58,9 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
   const [checkInDate, setCheckInDate] = useState<Date>();
   const [checkOutDate, setCheckOutDate] = useState<Date>();
   const [createBooking, { isLoading }] = useCreateBookingMutation();
+  const isAuthenticated = useSelector((state: RootState) => !!state.auth.user);
+  const navigate = useNavigate();
+const location = useLocation();
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -64,6 +74,11 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
   }, [checkInDate, checkOutDate, setValue]);
 
   const submitHandler = async (data: BookingFormData) => {
+    // stop booking until logged in
+     if (!isAuthenticated) {
+    navigate("/signin", { state: { from: location.pathname } });
+    return; 
+  }
     const start = new Date(data.checkIn);
     const end = new Date(data.checkOut);
 
@@ -122,27 +137,30 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
           <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <CalendarIcon className="text-primary w-4 h-4" /> Check-in Date
           </label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded-lg p-[14px_16px] text-muted text-[14px] text-left outline-none transition-colors focus:border-[#c9a961]"
-              >
-                {checkInDate ? format(checkInDate, "yyyy-MM-dd") : "Select date"}
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={checkInDate}
-                disabled={isDateUnavailable}
-                onSelect={(date) => {
-                  setCheckInDate(date);
-                  setValue("checkIn", date ? format(date, "yyyy-MM-dd") : "");
-                }}
-              />
-            </PopoverContent>
-          </Popover>
+          <Popover open={checkInPopoverOpen} onOpenChange={setCheckInPopoverOpen}>
+  <PopoverTrigger asChild>
+    <button
+      type="button"
+      className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded-lg p-[14px_16px] text-muted text-[14px] text-left outline-none transition-colors focus:border-[#c9a961]"
+      onClick={() => setCheckInPopoverOpen(true)}
+    >
+      {checkInDate ? format(checkInDate, "yyyy-MM-dd") : "Select date"}
+    </button>
+  </PopoverTrigger>
+  <PopoverContent className="w-auto p-0">
+    <Calendar
+      mode="single"
+      selected={checkInDate}
+      disabled={isDateUnavailable}
+      onSelect={(date) => {
+        setCheckInDate(date);
+        setValue("checkIn", date ? format(date, "yyyy-MM-dd") : "");
+        setCheckInPopoverOpen(false); // ✅ close on select
+      }}
+    />
+  </PopoverContent>
+</Popover>
+
           {errors.checkIn && <p className="text-red-400 text-xs">{errors.checkIn.message}</p>}
         </div>
 
@@ -151,7 +169,7 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
           <label className="text-muted text-[13px] flex gap-1.5 items-center">
             <CalendarIcon className="text-primary w-4 h-4" /> Check-out Date
           </label>
-          <Popover>
+          <Popover open={checkOutPopoverOpen} onOpenChange={setCheckOutPopoverOpen}>
             <PopoverTrigger asChild>
               <button
                 type="button"
@@ -168,6 +186,7 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
                 onSelect={(date) => {
                   setCheckOutDate(date || undefined);
                   setValue("checkOut", date ? format(date, "yyyy-MM-dd") : "");
+                   setCheckOutPopoverOpen(false);
                 }}
               />
             </PopoverContent>

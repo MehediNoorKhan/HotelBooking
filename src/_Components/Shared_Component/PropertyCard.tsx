@@ -9,6 +9,7 @@ import wifiicon from "../../images/wifiiconCardgray.png";
 import acicon from "../../images/aciconCardgray.png";
 import kitchenicon from "../../images/kitcheniconCardgray.png";
 import gymicon from "../../images/gymiconCardgray.png";
+import { useEffect, useState } from "react";
 
 interface Props {
   item: Apartment;
@@ -33,6 +34,19 @@ export default function PropertyCard({ item, index }: Props) {
     }
   };
 
+  const images = item.images?.length ? item.images : ["/images/placeholder.jpg"];
+const [currentImage, setCurrentImage] = useState(0);
+
+useEffect(() => {
+  if (images.length <= 1) return;
+
+  const interval = setInterval(() => {
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  }, 3000); // change image every 3s
+
+  return () => clearInterval(interval);
+}, [images.length]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -44,11 +58,11 @@ export default function PropertyCard({ item, index }: Props) {
       {/* Image */}
       <div className="relative w-full h-[250px]">
         <img
-    src={item.images?.[0] || "/images/placeholder.jpg"}
-    alt={item.name}
-    className="w-full h-full object-cover rounded-t-[12px]"
-    loading="lazy"
-  />
+  src={images[currentImage]}
+  alt={item.name}
+  className="w-full h-full object-cover rounded-t-[12px]"
+  loading="lazy"
+/>
         <div className="absolute top-2.5 right-2.5 bg-background px-2 py-1.5 rounded-full text-[14px]">
           ${item.pricing.nightly}/<span className="text-[12px]">night</span>
         </div>

@@ -1,4 +1,3 @@
-import { createBrowserRouter } from "react-router";
 import RootLayout from "../RootLayout/RootLayout";
 import Home from "../Home/Home";
 import ApartmentDetails from "../../Pages/ApartmentDetails/ApartmentDetails";
@@ -23,6 +22,7 @@ import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 import ProtectedRoute from "./ProtectedRoute"; 
 import DashboardLayout from "../Dashboard/DashboardLayout"; 
 import NotFound from "@/Pages/NotFound";
+import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([
   {

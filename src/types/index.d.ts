@@ -99,6 +99,11 @@ export interface Booking {
   guest_name: string;
   booking_id: number;
 }
+export interface BookingResponse {
+  status: boolean;
+  message: string;
+  data: Booking[];
+}
 
 export interface Stats {
   total_inquiries: number;
@@ -116,4 +121,28 @@ export interface DashboardResponse {
   status: boolean;
   message: DashboardMessage;
   data: string;
+}
+
+
+interface BookingFormProps {
+  apartmentId: number;
+  monthlyPrice: number;
+}
+
+export interface BookingFormData {
+  checkIn: string;
+  checkOut: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  message?: string;
+}
+
+export interface ApartmentSearchPayload {
+  location?: string;
+  check_in_date?: string;
+  check_out_date?: string;
+  min_price?: number;
+  max_price?: number;
+  price_type?: "daily" | "weekly" | "monthly";
 }

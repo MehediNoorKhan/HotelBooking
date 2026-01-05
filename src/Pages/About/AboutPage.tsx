@@ -8,8 +8,14 @@ import avatar from "@/assets/Icons/avater.svg"
 import eye from "@/assets/Icons/eye.svg"
  
 import { Send } from "lucide-react";
+import { useGetAboutUsQuery} from "@/features/common/commonApi";
 
 const AboutPage = () => {
+
+ const{data}=useGetAboutUsQuery()
+console.log("About Data:", data);
+
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
       {/* Hero Section */}

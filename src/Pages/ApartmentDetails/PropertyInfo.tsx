@@ -82,6 +82,31 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
           </div>
         </div>
       )}
+
+      {/* Building ameninities */}
+      {amenities.length > 0 && (
+        <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
+          <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
+            Building Amenities
+          </h2>
+
+          <div className="flex flex-wrap gap-3">
+            {amenities.map((a) => (
+              <StatCard
+                key={a.id}
+                icon={
+                  a.icon ? (
+                    <img src={a.icon} className="w-6 h-6 object-contain" />
+                  ) : (
+                    <BedDouble className="text-primary w-6 h-6" />
+                  )
+                }
+                label={a.name}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

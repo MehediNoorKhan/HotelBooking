@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -25,6 +25,8 @@ export default function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
+  const location = useLocation();
+const from = (location.state as { from?: string })?.from || "/dashboard";
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -46,7 +48,7 @@ export default function LoginPage() {
       );
 
       toast.success("Login successful!");
-      navigate("/dashboard");
+navigate(from, { replace: true });
     } catch (err: any) {
       toast.error(err?.data?.message || "Login failed");
     }

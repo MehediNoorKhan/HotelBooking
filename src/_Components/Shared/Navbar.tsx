@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Heart } from "lucide-react";
-
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 import logo from "../../images/logo.png";
 import hamburger from "../../images/hamburger.png";
 
@@ -9,7 +10,9 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
-
+ const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const menuItems = [
     { label: "Home", path: "/" },
     { label: "NYC Apartments", path: "/apartments" },
@@ -148,21 +151,25 @@ export default function Navbar() {
           ))}
 
           {/* Auth Buttons */}
-          <Link
-            to="/signin"
-            onClick={closeMenu}
-            className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 text-center"
-          >
-            Sign In
-          </Link>
+         {!isAuthenticated && (
+  <>
+    <Link
+      to="/signin"
+      onClick={closeMenu}
+      className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-8 text-center"
+    >
+      Sign In
+    </Link>
 
-          <Link
-            to="/signup"
-            onClick={closeMenu}
-            className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-4 text-center"
-          >
-            Sign Up
-          </Link>
+    <Link
+      to="/signup"
+      onClick={closeMenu}
+      className="bg-muted text-foreground font-display font-extrabold py-3 px-6 rounded-lg mt-4 text-center"
+    >
+      Sign Up
+    </Link>
+  </>
+)}
         </nav>
       </aside>
     </>

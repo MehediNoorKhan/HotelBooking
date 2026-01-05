@@ -4,12 +4,14 @@ import { useGetDashboardDataQuery } from "@/features/dashboard/mainDashboard";
 import type { Booking, StatsCardData } from "@/types";
 import { FileText, Clock, Calendar } from "lucide-react";
 import { mapBookingToStay } from "@/lib/mapBookingToStay";
+import { useGetUserProfileQuery } from "@/features/user/userAPI";
 
 const DashboardHome = () => {
 
   
   // Fetch dashboard data
   const { data, isLoading, error } = useGetDashboardDataQuery();
+  const { data:Profiledata, } = useGetUserProfileQuery();
 
   // Handle loading state
    if (isLoading) return <p>Loading...</p>;
@@ -50,7 +52,7 @@ const DashboardHome = () => {
         <div className="mb-8">
           <p className="text-primary text-base">Welcome back</p>
           <h1 className="text-[34px] font-semibold leading-[120%] text-muted">
-            Alexandra Whitmore
+           {Profiledata?.first_name} {Profiledata?.last_name}
           </h1>
           <p className="text-muted/50">
             Manage your luxury stays and inquiries in one place
@@ -58,7 +60,7 @@ const DashboardHome = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {statsCards.map((stat) => (
             <StatsCard key={stat.label} {...stat} />
           ))}

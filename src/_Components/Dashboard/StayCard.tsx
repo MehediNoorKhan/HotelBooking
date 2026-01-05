@@ -34,7 +34,7 @@ export default function StayCard({
         src={stay.image}
         alt={stay.title}
         className={`
-          object-cover
+          object-contain
           rounded-xl
           w-full
           h-48

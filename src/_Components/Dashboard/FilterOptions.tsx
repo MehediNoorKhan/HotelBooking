@@ -5,7 +5,6 @@ const FILTER_OPTIONS: { label: string; value: InquiryStatus }[] = [
   { label: "Pending", value: "pending" },
   { label: "Approved", value: "approved" },
   { label: "Completed", value: "completed" },
-  { label: "Unavailable", value: "unavailable" },
 ];
 
 export default function InquiryFilter({ value, onChange }: FilterProps) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,9 @@ export default function SignUpPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+   const location = useLocation();
+const from = (location.state as { from?: string })?.from || "/dashboard";
+
 
   const [signup, { isLoading }] = useSignupMutation();
 
@@ -56,7 +59,7 @@ export default function SignUpPage() {
       );
 
       toast.success("Your account has been created successfully.");
-      navigate("/dashboard");
+      navigate(from, { replace: true });
     } catch (err: any) {
       toast.error(err?.data?.message || "Signup failed");
     }

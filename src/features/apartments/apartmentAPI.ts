@@ -1,5 +1,6 @@
 import { rtkApi } from "@/services/rtkApi";
 import type { Apartment, singleApartment } from "./type";
+import type { ApartmentSearchPayload } from "@/types";
 
 export const apartmentsApi = rtkApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,7 +17,21 @@ export const apartmentsApi = rtkApi.injectEndpoints({
       providesTags: (_result, _error, id) => [{ type: "Apartments", id }],
     }),
 
+    // Search Apartment
+    searchApartments: builder.mutation<Apartment[], ApartmentSearchPayload>({
+      query: (body) => ({
+        url: "/apartment/search",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: any) => {
+    console.log("🔍 Search API raw response:", response);
+    return response.data;
+  },
+    }),
 
+
+    // Get apartment calendar details
    getApartmentCalendar: builder.query<{ unavailable_dates: string[]; minimum_stay: number }, number>({
   query: (apartmentId) => `/appartment/calender/${apartmentId}`,
   transformResponse: (response: any) => response.data || { unavailable_dates: [], minimum_stay: 30 }, 
@@ -28,5 +43,6 @@ export const apartmentsApi = rtkApi.injectEndpoints({
 export const {
   useGetAllApartmentsQuery,
   useGetApartmentDetailsQuery,
+   useSearchApartmentsMutation,
   useGetApartmentCalendarQuery
 } = apartmentsApi;

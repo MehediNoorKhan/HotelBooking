@@ -1,59 +1,73 @@
-import { useGetAllApartmentsQuery } from "@/features/apartments/apartmentAPI";
+import { useState } from "react";
+import {
+  useGetAllApartmentsQuery,
+  useSearchApartmentsMutation,
+} from "@/features/apartments/apartmentAPI";
+
 import ApartmentSearch from "../../_Components/Shared_Component/ApartmentSearch";
-import image from "../../images/apartmentImage.png";
 import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
+import image from "../../images/apartmentImage.png";
+import type { Apartment } from "@/features/apartments/type";
 
 const Apartments = () => {
+  const [searchedApartments, setSearchedApartments] =
+    useState<Apartment[] | null>(null);
+
   const {
-    data: apartments = [],
+    data: allApartments = [],
     isLoading,
     isError,
-  } = useGetAllApartmentsQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-  });
-   console.log(apartments);
+  } = useGetAllApartmentsQuery(undefined);
+
+  const [searchApartments, { isLoading: isSearching }] =
+    useSearchApartmentsMutation();
+
+  const handleSearch = async (data: any) => {
+    try {
+      const result = await searchApartments(data).unwrap();
+      setSearchedApartments(result);
+    } catch (err) {
+      console.error("Search failed", err);
+      setSearchedApartments([]);
+    }
+  };
+
+  const apartmentsToShow =
+    searchedApartments !== null ? searchedApartments : allApartments;
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Hero Section */}
-      <section className="pt-16 sm:pt-20 lg:pt-24 pb-20 flex flex-col items-center">
-        {/* Text */}
-        <div className="font-display text-center max-w-7xl flex flex-col gap-6">
-          <h1
-            className="text-muted font-display font-bold 
-            text-[32px] sm:text-[40px] lg:text-[54px] leading-[120%]"
-          >
+      {/* Hero */}
+      <section className="pt-16 pb-20 flex flex-col items-center">
+        <div className="text-center max-w-7xl flex flex-col gap-6">
+          <h1 className="text-muted font-bold text-[32px] sm:text-[40px] lg:text-[54px]">
             Explore Our Luxury Apartments in New York
           </h1>
-
-          <p className="text-muted text-base w-3/4 sm:text-lg leading-relaxed self-center">
-            Browse our curated collection of fully furnished, premium residences
-            located in the most desirable neighborhoods of New York City.
+          <p className="text-muted text-base w-3/4 self-center">
+            Browse our curated collection of premium residences.
           </p>
         </div>
 
-        {/* Hero Image */}
-        <div className="w-full overflow-hidden rounded-tl-[80px] rounded-br-[80px] sm:rounded-tl-[120px] sm:rounded-br-[120px] my-10">
+        <div className="w-full my-10 overflow-hidden rounded-tl-[80px] rounded-br-[80px]">
           <img
             src={image}
             alt="Luxury Apartment"
             className="w-full h-[220px] sm:h-[360px] lg:h-[450px] object-cover"
-            loading="lazy"
           />
         </div>
 
         {/* Search */}
-        <ApartmentSearch />
+        <ApartmentSearch onSearch={handleSearch} />
       </section>
 
-      {/* Featured Properties */}
-      <section className="py-12 sm:py-16 lg:py-20">
+      {/* Listings */}
+      <section className="py-12">
         <FeaturedProperties
-          properties={apartments}
-          isLoading={isLoading}
+          properties={apartmentsToShow}
+          isLoading={isLoading || isSearching}
           isError={isError}
           title="Apartment Listing"
-          subTitle="Handpicked apartments that embody sophistication and comfort in New York's most prestigious locations."
+          subTitle="Handpicked apartments that embody sophistication and comfort in most prestigious locations."
         />
       </section>
     </div>
