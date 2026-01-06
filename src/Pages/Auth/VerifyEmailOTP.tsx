@@ -93,10 +93,12 @@ const VerifyEmailOTP: React.FC<VerifyEmailOTPProps> = () => {
                 <InputOTPGroup className="gap-2">
                   {Array.from({ length: 6 }).map((_, idx) => (
                     <InputOTPSlot
-                      key={idx}
-                      index={idx}
-                      className="w-12 h-14 bg-transparent border-2 border-primary/80 rounded-lg text-muted text-xl focus:border-primary focus:ring-0"
-                    />
+  key={idx}
+  index={idx}
+  className="w-12 h-14 bg-transparent border-2 border-primary/80 rounded-lg 
+             text-muted text-xl text-center 
+             focus:border-primary focus:ring-0"
+/>
                   ))}
                 </InputOTPGroup>
               </InputOTP>

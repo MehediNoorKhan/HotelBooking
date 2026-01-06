@@ -146,3 +146,62 @@ export interface ApartmentSearchPayload {
   max_price?: number;
   price_type?: "daily" | "weekly" | "monthly";
 }
+
+export interface MaintenanceApiItem {
+  booking_invoice: string;
+  apartment_title: string;
+  booking_id: number;
+  amenity_category_id: string;
+  description: string;
+  status: "pending" | "resolved" | "in-progress";
+  submitted_at: string;
+  resolved_at: string | null;
+}
+
+// API response
+export interface MaintenanceApiResponse {
+  status: boolean;
+  message: string;
+  data: MaintenanceApiItem[];
+}
+
+export interface MaintenanceUIItem {
+  title: string;
+  location: string;
+  bookingId: string;
+  description: string;
+  submittedDate: string;
+  resolvedDate?: string;
+  status: "pending" | "resolved" | "in-progress";
+}
+
+
+// Maintance
+export interface InvoiceApiItem {
+  booking_invoice: string;
+  booking_id: number;
+}
+
+export interface InvoiceApiResponse {
+  status: boolean;
+  message: string;
+  data: InvoiceApiItem[];
+}
+
+export interface AmenityCategoryApiItem {
+  category_id: number;
+  category_name: string;
+}
+
+export interface AmenityCategoryApiResponse {
+  status: boolean;
+  message: string;
+  data: AmenityCategoryApiItem[];
+}
+
+// POST payload
+export interface CreateMaintenancePayload {
+  invoice_number: string;
+  amenity_category_id: number;
+  description: string;
+}

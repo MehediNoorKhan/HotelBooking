@@ -5,6 +5,7 @@ import type { InquiryStatus, Booking } from "@/types";
 import { useState } from "react";
 import { mapBookingToStay } from "@/lib/mapBookingToStay";
 import { useGetUserBookingDataQuery } from "@/features/dashboard/booking";
+import DashboardSkeleton from "@/_Components/Shared_Component/DashboardSkeleton";
 
 const MyBooking = () => {
   const [filter, setFilter] = useState<InquiryStatus>("all");
@@ -16,6 +17,12 @@ const MyBooking = () => {
   } = useGetUserBookingDataQuery(filter);
 
   const bookings: Booking[] = data?.data ?? [];
+
+
+// SHOW SKELETON WHILE LOADING
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     <ScrollArea className="flex-1">
@@ -32,7 +39,7 @@ const MyBooking = () => {
         <InquiryFilter value={filter} onChange={setFilter} />
 
         {/* Cards */}
-        {isLoading && <p>Loading bookings...</p>}
+       
         {isError && <p>Failed to load bookings.</p>}
         {!isLoading && !isError && bookings.length === 0 && (
           <p>No bookings found.</p>

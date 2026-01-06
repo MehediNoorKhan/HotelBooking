@@ -5,6 +5,7 @@ import type { Booking, StatsCardData } from "@/types";
 import { FileText, Clock, Calendar } from "lucide-react";
 import { mapBookingToStay } from "@/lib/mapBookingToStay";
 import { useGetUserProfileQuery } from "@/features/user/userAPI";
+import DashboardSkeleton from "@/_Components/Shared_Component/DashboardSkeleton";
 
 const DashboardHome = () => {
 
@@ -14,7 +15,7 @@ const DashboardHome = () => {
   const { data:Profiledata, } = useGetUserProfileQuery();
 
   // Handle loading state
-   if (isLoading) return <p>Loading...</p>;
+  
   if (error) return <p>Error...</p>;
   if (!data?.message) return <p>Invalid data</p>;
 
@@ -44,6 +45,12 @@ const DashboardHome = () => {
       icon: Calendar,
     },
   ];
+
+
+// SHOW SKELETON WHILE LOADING
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     // <DashboardLayout>

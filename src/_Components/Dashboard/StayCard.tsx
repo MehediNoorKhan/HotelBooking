@@ -34,7 +34,7 @@ export default function StayCard({
         src={stay.image}
         alt={stay.title}
         className={`
-          object-contain
+          object-cover
           rounded-xl
           w-full
           h-48
@@ -102,9 +102,7 @@ export default function StayCard({
 
         {/* Action */}
         <div className="flex justify-end mt-4">
-          <button className="text-primary hover:text-muted/50 flex items-center gap-2 text-sm">
-            View Details <ArrowRight size={14} />
-          </button>
+          
         </div>
       </div>
     </div>

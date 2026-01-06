@@ -1,6 +1,6 @@
 import { Settings } from 'lucide-react';
 
-export type MaintenanceStatus = 'pending' | 'resolved' | 'in-progress';
+export type MaintenanceStatus = 'pending' | 'resolved' | 'in-progress'| 'rejected';
 
 export interface MaintenanceCardProps {
   data: {
@@ -18,6 +18,7 @@ const STATUS_STYLES: Record<MaintenanceStatus, string> = {
   resolved: 'bg-teal-500/20 text-teal-400',
   'in-progress': 'bg-yellow-500/20 text-yellow-400',
   pending: 'bg-orange-500/20 text-orange-400',
+  rejected: 'bg-red-500/20 text-red-400',
 };
 
 export default function MaintenanceCard({ data }: MaintenanceCardProps) {
