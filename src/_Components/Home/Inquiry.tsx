@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
-import inquiryimg from "../../images/inquiryimg.png";
+import inquiryimg from "../../images/inquiryimg.jpg";
 import { sendInquiry } from "@/services/contactServices";
 import { toast } from "sonner";
 
@@ -123,6 +123,9 @@ export default function Inquiry() {
             {success && <p className="text-green-400 text-sm">{success}</p>}
             {error && <p className="text-red-400 text-sm">{error}</p>}
           </form>
+        </div>
+        <div className="absolute w-[400px] right-25 -bottom-8">
+          <p>We are here to help you find the perfect luxury apartment in New York. Fill out the details below, and we we'll reach out with availability and pricing.</p>
         </div>
       </div>
 

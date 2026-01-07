@@ -13,8 +13,6 @@ import { useCreateBookingMutation } from "@/features/bookingApartment/bookingApi
 import { useGetApartmentCalendarQuery } from "@/features/apartments/apartmentAPI";
 import type { BookingFormData, BookingFormProps } from "@/types";
 import { data } from "react-router";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const BookingForm: React.FC<BookingFormProps> = ({ apartmentId, monthlyPrice }) => {
@@ -58,7 +56,6 @@ const unavailableDates = useMemo(() => new Set(calendar.unavailable_dates), [cal
   const [checkInDate, setCheckInDate] = useState<Date>();
   const [checkOutDate, setCheckOutDate] = useState<Date>();
   const [createBooking, { isLoading }] = useCreateBookingMutation();
-  const isAuthenticated = useSelector((state: RootState) => !!state.auth.user);
   const navigate = useNavigate();
 const location = useLocation();
 
@@ -74,44 +71,67 @@ const location = useLocation();
   }, [checkInDate, checkOutDate, setValue]);
 
   const submitHandler = async (data: BookingFormData) => {
-    // stop booking until logged in
-     if (!isAuthenticated) {
-    navigate("/signin", { state: { from: location.pathname } });
-    return; 
+  // 🔐 Auth check (source of truth = token)
+  const token =
+    localStorage.getItem("token") ||
+    localStorage.getItem("access_token");
+
+  if (!token) {
+    navigate("/signin", {
+      state: { from: location.pathname },
+      replace: true,
+    });
+    return;
   }
-    const start = new Date(data.checkIn);
-    const end = new Date(data.checkOut);
 
-    const months = Math.max(
-      1,
-      (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
+  const start = new Date(data.checkIn);
+  const end = new Date(data.checkOut);
+
+  const months = Math.max(
+    1,
+    (end.getFullYear() - start.getFullYear()) * 12 +
+      (end.getMonth() - start.getMonth())
+  );
+
+  const base_price = months * monthlyPrice;
+  const tax = base_price * 0.1;
+  const total_price = base_price + tax;
+
+  try {
+    await createBooking({
+      apartment_id: apartmentId,
+      guest_name: data.fullName,
+      guest_email: data.email,
+      guest_phone: data.phone,
+      check_in_date: data.checkIn,
+      check_out_date: data.checkOut,
+      base_price,
+      tax,
+      total_price,
+      messege: data.message,
+    }).unwrap();
+
+    toast.success(
+      "Booking request submitted! Our team will contact you within 24 hours."
     );
-    const base_price = months * monthlyPrice;
-    const tax = base_price * 0.1;
-    const total_price = base_price + tax;
 
-    try {
-      await createBooking({
-        apartment_id: apartmentId,
-        guest_name: data.fullName,
-        guest_email: data.email,
-        guest_phone: data.phone,
-        check_in_date: data.checkIn,
-        check_out_date: data.checkOut,
-        base_price,
-        tax,
-        total_price,
-        messege: data.message,
-      }).unwrap();
-
-      toast.success("Booking request submitted! Our team will contact you within 24 hours.");
-      reset();
-      setCheckInDate(undefined);
-      setCheckOutDate(undefined);
-    } catch (error: any) {
-      toast.error(error?.data?.message || "Something went wrong");
+    reset();
+    setCheckInDate(undefined);
+    setCheckOutDate(undefined);
+  } catch (error: any) {
+    // 🔥 Secondary protection: backend auth failure
+    if (error?.status === 401) {
+      navigate("/signin", {
+        state: { from: location.pathname },
+        replace: true,
+      });
+      return;
     }
-  };
+
+    toast.error(error?.data?.message || "Something went wrong");
+  }
+};
+
 
   // Check if a date is unavailable for selection
   const isDateUnavailable = (date: Date) => {
