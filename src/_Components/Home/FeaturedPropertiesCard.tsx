@@ -23,7 +23,7 @@ export default function FeaturedProperties({
   const visibleProperties = properties.slice(0, visibleCount);
 
   return (
-    <section className="container mx-auto py-12">
+    <section className="container mx-auto py-12 px-4">
       {/* Title */}
       <div className="flex flex-col justify-center items-center text-center gap-3 mb-[30px] xl:mb-[50px]">
         <span className="bg-background text-foreground font-medium text-[18px] sm:text-[16px] px-3.5 py-2 rounded-2xl xl:text-[18px] xl:px-5 xl:py-2.5">
@@ -57,6 +57,7 @@ export default function FeaturedProperties({
       {!isLoading && !isError && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-7 lg:gap-8 xl:gap-10">
+            
             {visibleProperties.map((item, index) => (
               <PropertyCard key={item.id} item={item} index={index} />
             ))}

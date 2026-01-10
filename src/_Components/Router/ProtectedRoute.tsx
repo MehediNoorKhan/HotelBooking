@@ -1,8 +1,13 @@
-import { Navigate, Outlet } from "react-router-dom";
+import type { ReactNode } from "react";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import type { RootState } from "@/app/store";
 
-export default function ProtectedRoute() {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -11,5 +16,5 @@ export default function ProtectedRoute() {
     return <Navigate to="/signin" replace />;
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 }

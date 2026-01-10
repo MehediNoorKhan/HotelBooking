@@ -1,91 +1,66 @@
+import { useGetTermsOfServiceQuery } from "@/features/common/commonApi";
 import image from "@/images/apartmentImage.png";
-
-
+import parse from "html-react-parser";
 
 const Terms = () => {
+  const { data, isLoading, isError } = useGetTermsOfServiceQuery();
 
+  if (isLoading) {
+    return <p className="text-center mt-20 text-muted">Loading Terms of Service...</p>;
+  }
+
+  if (isError || !data?.data?.term_condition) {
+    return <p className="text-center mt-20 text-primary">Failed to load Terms of Service.</p>;
+  }
+
+  const terms = data.data.term_condition;
 
   return (
     <div className="container mx-auto max-w-7xl px-6 mt-20">
       {/* -------------------- Header -------------------- */}
       <div className="flex flex-col items-center gap-6 text-center">
         <div className="flex items-center justify-center h-8 w-16 bg-background rounded-full font-medium">
-          <p>{termsData.meta.category}</p>
+          <p>Legal</p>
         </div>
 
         <h1 className="text-background font-display font-medium text-3xl">
-          {termsData.meta.title}
+          {terms.title}
         </h1>
 
         <p className="text-sm text-background">
           <span className="font-semibold">Last Updated:</span>{" "}
-          {termsData.meta.lastUpdated}
+          {new Date(terms.updated_at).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </p>
 
-        <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] my-10">
-          <img src={image} alt="Apartment" className="w-full h-full object-cover" />
+        <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] my-5">
+          <img
+            src={image}
+            alt="Terms of Service"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
 
       {/* -------------------- Content -------------------- */}
-      <div className="mt-24 text-background space-y-12">
+      <div className="mt-15 text-background space-y-12">
         {/* Intro */}
         <div className="border border-primary rounded-[20px] py-12 px-6">
-          <p>{termsData.meta.description}</p>
+          <p>
+            Welcome to our luxury apartment rental platform. These Terms of Service ("Terms") govern your access to and use of our website and services. By using our platform, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you have any questions or concerns, please contact us.
+          </p>
         </div>
 
-        {/* Sections */}
-        {termsData.sections.map((section) => (
-          <div key={section.id} className="space-y-3">
-            <h4 className="font-medium text-lg">{section.title}</h4>
-            <p className="text-base leading-relaxed">
-              {section.content}
-            </p>
-          </div>
-        ))}
+        {/* Parsed HTML content from API */}
+        <div className="space-y-6 leading-relaxed text-base break-words overflow-hidden max-w-full">
+          {parse(terms.content)}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Terms;
-
-
-
-
-
-const termsData = {
-  meta: {
-    category: "Legal",
-    title: "Terms of Service",
-    lastUpdated: "December 21, 2024",
-    description:
-      "Welcome to our luxury apartment rental platform. These Terms of Service ('Terms') govern your access to and use of our website and services.",
-  },
-  sections: [
-    {
-      id: 1,
-      title: "Acceptance of Terms",
-      content:
-        "By accessing or using our platform, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree, you must not use our services.",
-    },
-    {
-      id: 2,
-      title: "Use of Services",
-      content:
-        "Our platform allows users to browse, inquire, and book luxury apartment rentals. You agree to use the services only for lawful purposes and in compliance with all applicable laws.",
-    },
-    {
-      id: 3,
-      title: "User Responsibilities",
-      content:
-        "You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.",
-    },
-    {
-      id: 4,
-      title: "Limitation of Liability",
-      content:
-        "We are not liable for any indirect, incidental, or consequential damages arising from your use of the platform or inability to access the services.",
-    },
-  ],
-};

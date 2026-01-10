@@ -1,5 +1,5 @@
 import type { Stay } from "@/types";
-import { Calendar, MapPin, ArrowRight } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
 interface StayCardProps {
   stay: Stay;
@@ -7,9 +7,11 @@ interface StayCardProps {
 }
 
 const statusStyles: Record<Stay["status"], string> = {
+  completed: "bg-teal-500/20 text-teal-400",
   approved: "bg-teal-500/20 text-teal-400",
   pending: "bg-yellow-500/20 text-yellow-400",
   rejected: "bg-red-500/20 text-red-400",
+  cancelled: "bg-red-500/20 text-red-400",
 };
 
 export default function StayCard({

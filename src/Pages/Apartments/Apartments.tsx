@@ -8,6 +8,7 @@ import ApartmentSearch from "../../_Components/Shared_Component/ApartmentSearch"
 import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
 import image from "../../images/apartmentImage.png";
 import type { Apartment } from "@/features/apartments/type";
+import { buildSearchPayload } from "@/Helper/builSearchPayload";
 
 const Apartments = () => {
   const [searchedApartments, setSearchedApartments] =
@@ -22,15 +23,23 @@ const Apartments = () => {
   const [searchApartments, { isLoading: isSearching }] =
     useSearchApartmentsMutation();
 
-  const handleSearch = async (data: any) => {
-    try {
-      const result = await searchApartments(data).unwrap();
-      setSearchedApartments(result);
-    } catch (err) {
-      console.error("Search failed", err);
-      setSearchedApartments([]);
-    }
-  };
+  const handleSearch = async (formData: any) => {
+  const payload = buildSearchPayload(formData);
+
+  // If user clicks search with no filters → reset
+  if (Object.keys(payload).length === 0) {
+    setSearchedApartments(null);
+    return;
+  }
+
+  try {
+    const result = await searchApartments(payload).unwrap();
+    setSearchedApartments(result);
+  } catch (error) {
+    console.error("Search failed", error);
+    setSearchedApartments([]);
+  }
+};
 
   const apartmentsToShow =
     searchedApartments !== null ? searchedApartments : allApartments;

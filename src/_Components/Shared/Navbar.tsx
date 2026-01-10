@@ -5,11 +5,14 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store";
 import logo from "../../images/logo.png";
 import hamburger from "../../images/hamburger.png";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  
  const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -71,14 +74,20 @@ export default function Navbar() {
           {/* Right actions */}
           <div className="flex items-center gap-10">
             <Link
-              to="/saved-property"
-              className="bg-background flex items-center gap-2 py-2.5 px-4 rounded-full"
-            >
-              <Heart />
-              <span className="hidden sm:block text-base font-medium">
-                Saved Property
-              </span>
-            </Link>
+  to={isAuthenticated ? "/saved-property" : "/signin"}
+  className="bg-background/20 hover:bg-background/40 flex items-center gap-2 py-2.5 px-4 rounded-full"
+  onClick={(e) => {
+    if (!isAuthenticated) {
+      e.preventDefault(); // prevent default navigation
+      toast.error("You need to sign in to access saved properties");
+    }
+  }}
+>
+  <Heart className="text-background hover:text-background/80 w-5 h-5" />
+  <span className="hidden sm:block text-base text-background/90 font-medium">
+    Saved Property
+  </span>
+</Link>
 
             <button onClick={() => setIsMenuOpen(true)}>
               <img

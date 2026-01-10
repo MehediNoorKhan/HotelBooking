@@ -59,22 +59,27 @@ export default function SidebarContent() {
               "linear-gradient(97deg, #000 15.89%, #D4BB8C 69.34%, #FFF 103.4%)",
           }}
         >
-          {/* User Image */}
-          <img
-            src={user?.image || userIcon}
-            alt={user?.first_name || "User"}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <div>
-            {/* User Name */}
-            <div className="text-muted text-xl font-semibold">
-              {loadingUser ? "Loading..." : isError ? "Unknown User" : `${user?.first_name} ${user?.last_name}`}
-            </div>
-            {/* User Location / Address */}
-            <div className="text-muted text-sm">
-              {user?.address || "Unknown Location"}
-            </div>
-          </div>
+          {!loadingUser && (
+  <>
+    <img
+      src={user?.image || userIcon}
+      alt={user?.first_name || "User"}
+      className="w-10 h-10 rounded-full object-cover"
+    />
+
+    <div>
+      <div className="text-muted text-xl font-semibold">
+        {isError
+          ? "Unknown User"
+          : `${user?.first_name} ${user?.last_name}`}
+      </div>
+
+      <div className="text-muted text-sm">
+        {user?.address || "Unknown Location"}
+      </div>
+    </div>
+  </>
+)}
         </div>
       </div>
 

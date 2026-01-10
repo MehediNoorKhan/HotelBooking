@@ -1,5 +1,5 @@
 import { rtkApi } from "@/services/rtkApi";
-import type { Apartment, singleApartment } from "./type";
+import type { Apartment, LovedApartment, LovedApartmentsResponse, singleApartment } from "./type";
 import type { ApartmentSearchPayload } from "@/types";
 
 export const apartmentsApi = rtkApi.injectEndpoints({
@@ -31,6 +31,31 @@ export const apartmentsApi = rtkApi.injectEndpoints({
     }),
 
 
+    // Love Apartment
+    loveApartment: builder.mutation<
+  { status: boolean; message: string },
+  number
+>({
+  query: (apartment_id) => {
+    const formData = new FormData();
+    formData.append("apartment_id", String(apartment_id));
+
+    return {
+      url: "/apartment/love/store",
+      method: "POST",
+      body: formData,
+    };
+  },
+  invalidatesTags: ["Apartments"],
+}),
+
+// Get Loved Apartments
+getLovedApartments: builder.query<LovedApartment[], void>({
+  query: () => "/apartments/loved/all",
+  transformResponse: (response: LovedApartmentsResponse) => response.data,
+}),
+
+
     // Get apartment calendar details
    getApartmentCalendar: builder.query<{ unavailable_dates: string[]; minimum_stay: number }, number>({
   query: (apartmentId) => `/appartment/calender/${apartmentId}`,
@@ -43,6 +68,8 @@ export const apartmentsApi = rtkApi.injectEndpoints({
 export const {
   useGetAllApartmentsQuery,
   useGetApartmentDetailsQuery,
-   useSearchApartmentsMutation,
-  useGetApartmentCalendarQuery
+  useSearchApartmentsMutation,
+  useLoveApartmentMutation,
+  useGetApartmentCalendarQuery,
+  useGetLovedApartmentsQuery
 } = apartmentsApi;

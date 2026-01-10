@@ -16,7 +16,8 @@ interface PropertyInfoProps {
   squareFootage?: string;
   location?: string;
   description: string;
-  amenities?: Amenity[]; // New prop
+   apartmentAmenities?: Amenity[];
+  buildingAmenities?: Amenity[];
 }
 
 const PropertyInfo: React.FC<PropertyInfoProps> = ({
@@ -27,8 +28,13 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
   squareFootage = "",
   location = "",
   description = "",
-  amenities = [],
+  apartmentAmenities = [],
+  buildingAmenities = [],
 }) => {
+
+
+
+
   return (
     <div className="flex flex-col gap-6 flex-1 min-w-[320px]">
       {/* Property Overview Section */}
@@ -59,14 +65,14 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
       </div>
 
       {/* Apartment Amenities Section */}
-      {amenities.length > 0 && (
+      {apartmentAmenities.length > 0 && (
         <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
           <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
             Apartment Amenities
           </h2>
 
           <div className="flex flex-wrap gap-3">
-            {amenities.map((a) => (
+            {apartmentAmenities.map((a) => (
               <StatCard
                 key={a.id}
                 icon={
@@ -84,14 +90,14 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
       )}
 
       {/* Building ameninities */}
-      {amenities.length > 0 && (
+      {buildingAmenities.length > 0 && (
         <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
           <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
             Building Amenities
           </h2>
 
           <div className="flex flex-wrap gap-3">
-            {amenities.map((a) => (
+            {buildingAmenities.map((a) => (
               <StatCard
                 key={a.id}
                 icon={

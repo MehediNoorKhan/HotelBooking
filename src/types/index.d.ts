@@ -11,7 +11,7 @@ export interface Properties {
     image: string;
 }
 
-export type StayStatus = "approved" | "pending" | "rejected";
+export type StayStatus = "approved" | "pending" | "rejected"|"cancelled"|"completed";
 
 export interface Stay {
   id: number;
@@ -204,4 +204,77 @@ export interface CreateMaintenancePayload {
   invoice_number: string;
   amenity_category_id: number;
   description: string;
+}
+
+
+
+// Common data types
+export interface PrivacyPolicyData {
+  id: number;
+  slug: string;
+  title: string;
+  content: string; // HTML content
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PrivacyPolicyResponse {
+  status: boolean;
+  message: string;
+  data: {
+    privacy: PrivacyPolicyData;
+  };
+}
+
+
+interface TermConditionData {
+  id: number;
+  slug: string;
+  title: string;
+  content: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface TermConditionResponse {
+  status: boolean;
+  message: string;
+  data: {
+    term_condition: TermConditionData;
+  };
+}
+
+
+interface AboutUsData {
+  id: number;
+  slug: string;
+  title: string;
+  content: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface AboutUsResponse {
+  status: boolean;
+  message: string;
+  data: {
+    aboutUs: AboutUsData;
+  };
+}
+
+export interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FAQResponse {
+  status: boolean;
+  message: string;
+  data: FAQ[];
 }

@@ -2,7 +2,7 @@ import Carousel from "./Carousel";
 import { Heart, Send, Share2 } from "lucide-react";
 import PropertyInfo from "./PropertyInfo";
 import BookingForm from "./BookingForm";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import ApartmentDetailsSkeleton from "../../_Components/ApartmentDetails/ApartmentDetailsSkeleton";
 import ctaBg from "@/images/CTA image.png";
 import FeaturedCard from "@/_Components/ApartmentDetails/FeaturedCard";
@@ -10,20 +10,57 @@ import { useLazyGetApartmentShareQuery } from "@/services/apartmentShareApi";
 import { toast } from "sonner";
 import { useGetApartmentDetailsQuery } from "@/features/apartments/apartmentAPI";
 import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
+import { useLoveApartmentMutation } from "@/features/apartments/apartmentAPI";
+import { useEffect, useState } from "react";
+
+
 
 const ApartmentDetails = () => {
   const { id } = useParams<{ id: string }>();
+const [isLoved, setIsLoved] = useState<boolean>(false);
+const isAuthenticated = Boolean(localStorage.getItem("token"));
 
+  
+  
   const {
-    data: apartment,
-    isLoading,
-    isError,
-  } = useGetApartmentDetailsQuery(id!, {
-    skip: !id,
-  });
-
+  data: apartment,
+  isLoading,
+  isError,
+  refetch, 
+} = useGetApartmentDetailsQuery(id!, {
+  skip: !id,
+});
   const { data: apartments = [] } = useGetFeaturedApartmentsQuery();
+  
+  const [loveApartment, { isLoading: isLoving }] =
+  useLoveApartmentMutation();
 
+
+  // Handle Love Apartment
+  useEffect(() => {
+  if (apartment?.is_loved !== undefined) {
+    setIsLoved(Boolean(apartment.is_loved));
+  }
+}, [apartment?.is_loved]);
+
+const handleLove = async () => {
+  if (!isAuthenticated) {
+    toast.error("Please login to save apartment");
+    return;
+  }
+  if (!apartment?.id) return;
+
+  try {
+    await loveApartment(apartment.id).unwrap();
+    setIsLoved(true);
+    refetch();
+    toast.success("Apartment saved successfully!");
+  } catch {
+    toast.error("Failed to save apartment");
+  }
+};
+
+  
   const [getShareUrl, { isFetching: isSharing }] =
     useLazyGetApartmentShareQuery();
 
@@ -49,7 +86,11 @@ const ApartmentDetails = () => {
     );
   }
 
-  const amenities = Object.values(apartment.amenities_by_category ?? {}).flat();
+  const apartmentAmenities =
+  apartment.amenities_by_category?.Apartment ?? [];
+
+const buildingAmenities =
+  apartment.amenities_by_category?.Building ?? [];
 
   return (
     <div className="bg-foreground">
@@ -74,9 +115,18 @@ const ApartmentDetails = () => {
           </div>
 
           <div className="flex gap-3">
-            <button className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center">
-              <Heart size={18} /> Save
-            </button>
+           <button
+  onClick={handleLove}
+  disabled={isLoving}
+  className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center
+  disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  <Heart
+    size={18}
+   className={isLoved ? "fill-red-500 text-red-500" : ""}
+  />
+  {isLoving ? "Saving..." : "Save"}
+</button>
 
             <button
               onClick={handleShare}
@@ -107,7 +157,8 @@ const ApartmentDetails = () => {
             squareFootage={`${apartment.square_feet} sq ft`}
             location={apartment.full_address}
             description={apartment.description}
-            amenities={amenities}
+            apartmentAmenities={apartmentAmenities}
+  buildingAmenities={buildingAmenities}
           />
 
           <BookingForm
@@ -144,9 +195,11 @@ const ApartmentDetails = () => {
             Experience luxury living at its finest. Our concierge team is
             available 24/7.
           </p>
-          <button className="mt-6 bg-primary px-6 py-3 rounded-xl flex items-center gap-2 mx-auto">
+          <Link to="/inquiry">
+          <button className="mt-6 bg-primary px-6 py-3 rounded-xl flex items-center gap-2 mx-auto hover:scale-95">
             <Send size={18} /> Send Inquiry Now
           </button>
+          </Link>
         </div>
       </div>
     </div>

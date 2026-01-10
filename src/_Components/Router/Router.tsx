@@ -18,9 +18,8 @@ import Terms from "@/Pages/Terms/Terms";
 import Policy from "@/Pages/Policy/Policy";
 import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 
-// Added imports for protection, layout, and 404
-import ProtectedRoute from "./ProtectedRoute"; 
-import DashboardLayout from "../Dashboard/DashboardLayout"; 
+import ProtectedRoute from "./ProtectedRoute";
+import DashboardLayout from "../Dashboard/DashboardLayout";
 import NotFound from "@/Pages/NotFound";
 import { createBrowserRouter } from "react-router";
 
@@ -29,96 +28,47 @@ export const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "apartment/:id",
-        element: <ApartmentDetails />,
-      },
-      {
-        path: "apartments",
-        element: <Apartments />,
-      },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
-      {
-        path: "faq",
-        element: <FaqPage />,
-      },
-      {
-        path: "signup",
-        element: <SignUpPage />,
-      },
-      {
-        path: "signin",
-        element: <LoginPage />,
-      },
-      {
-        path: "forgot-password",
-        element: <ForgotPasswordForm />,
-      },
-      {
-        path: "verification",
-        element: <VerifyEmailOTP />,
-      },
-      {
-        path: "reset-password",
-        element: <SetNewPassword />,
-      },
-      {
-        path: "inquiry",
-        element: <InquiryPage />,
-      },
-      {
-        path: "terms",
-        element: <Terms />,
-      },
-      {
-        path: "privacy-policy",
-        element: <Policy />,
-      },
+      { index: true, element: <Home /> },
+      { path: "apartment/:id", element: <ApartmentDetails /> },
+      { path: "apartments", element: <Apartments /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "faq", element: <FaqPage /> },
+      { path: "signup", element: <SignUpPage /> },
+      { path: "signin", element: <LoginPage /> },
+      { path: "forgot-password", element: <ForgotPasswordForm /> },
+      { path: "verification", element: <VerifyEmailOTP /> },
+      { path: "reset-password", element: <SetNewPassword /> },
+      { path: "inquiry", element: <InquiryPage /> },
+      { path: "terms", element: <Terms /> },
+      { path: "privacy-policy", element: <Policy /> },
+
+      
       {
         path: "saved-property",
-        element: <SavedProperty />,
+        element: (
+          <ProtectedRoute>
+            <SavedProperty />
+          </ProtectedRoute>
+        ),
       },
-      // Add this catch-all route for 404 errors
-      {
-        path: "*",
-        element: <NotFound />,
-      },
+
+      // Catch-all 404
+      { path: "*", element: <NotFound /> },
     ],
   },
 
-  // Protected Dashboard routes
   {
     path: "/dashboard",
-    element: <ProtectedRoute />, // Wraps all dashboard routes with authentication check
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      {
-        element: <DashboardLayout />, // Applies the dashboard layout to all child routes
-        children: [
-          {
-            index: true,
-            element: <DashboardHome />,
-          },
-          {
-            path: "bookings",
-            element: <MyBookings />,
-          },
-          {
-            path: "maintenance",
-            element: <Maintenance />,
-          },
-          {
-            path: "profile",
-            element: <Profile />,
-          },
-        ],
-      },
+      { index: true, element: <DashboardHome /> },
+      { path: "bookings", element: <MyBookings /> },
+      { path: "maintenance", element: <Maintenance /> },
+      { path: "profile", element: <Profile /> },
     ],
   },
 ]);

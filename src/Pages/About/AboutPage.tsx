@@ -6,14 +6,22 @@ import frame from "@/assets/Icons/Frame.svg"
 import home from "@/assets/Icons/Home.svg"
 import avatar from "@/assets/Icons/avater.svg"
 import eye from "@/assets/Icons/eye.svg"
- 
 import { Send } from "lucide-react";
 import { useGetAboutUsQuery} from "@/features/common/commonApi";
+import parse from "html-react-parser";
 
 const AboutPage = () => {
+const { data, isLoading, isError } = useGetAboutUsQuery();
 
- const{data}=useGetAboutUsQuery()
-console.log("About Data:", data);
+  if (isLoading) {
+    return <p className="text-center mt-20 text-muted">Loading About Us...</p>;
+  }
+
+  if (isError || !data?.data?.aboutUs) {
+    return <p className="text-center mt-20 text-primary">Failed to load About Us.</p>;
+  }
+
+  const about = data.data.aboutUs;
 
 
   return (
@@ -45,24 +53,9 @@ console.log("About Data:", data);
           <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-semibold leading-[120%] text-muted mb-4">
             Redefining NYC
           </h2>
-
-          <p className="text-base sm:text-lg text-muted leading-relaxed">
-            RoveTravel was born from a simple belief: travelers deserve more
-            than just a place to sleep. They deserve to experience New York City
-            like a local—waking up in vibrant neighborhoods, making coffee in a
-            real kitchen, and discovering hidden gems around every corner.
-            <br />
-            <br />
-            Founded by a team of lifelong New Yorkers, we've spent years
-            building relationships with property owners who share our vision of
-            authentic hospitality. Every apartment in our collection is
-            personally vetted to ensure it meets our exacting standards for
-            comfort, cleanliness, and character.
-            <br />
-            <br />
-            Today, we've helped over 50,000 travelers create unforgettable NYC
-            memories, and we're just getting started.
-          </p>
+ <div className="text-background space-y-6 leading-relaxed text-base wrap-break-word overflow-hidden max-w-full">
+           {parse(about.content)}
+        </div>
 
           {/* Secondary Image */}
           <div className="overflow-hidden my-10">

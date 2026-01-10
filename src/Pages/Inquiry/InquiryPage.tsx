@@ -79,7 +79,7 @@ const InquiryPage = () => {
   };
 
   return (
-    <div className="container mx-auto pb-12 px-4 text-muted pt-10 font-display lg:py-20">
+    <div className="container mx-auto pb-12 px-4 text-muted pt-10 font-medium lg:py-20">
       {/* Hero */}
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
@@ -136,15 +136,15 @@ const InquiryPage = () => {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full py-6 font-semibold"
+            className="w-full py-6 text-base font-semibold"
           >
             {loading ? "Sending..." : "Send Message"}
           </Button>
         </form>
 
         {/* Contact Info */}
-        <div className="max-w-[320px] h-[450px] bg-primary rounded-2xl p-8 text-foreground">
-          <h2 className="text-lg font-medium mb-6">Contact Information</h2>
+        <div className="max-w-[320px] h-[450px] bg-[#E2D1B2] rounded-2xl p-8 text-foreground">
+          <h2 className="text-2xl font-semibold mb-6">Contact Information</h2>
 
           <ContactItem icon={Mail} title="Email" value="contact@company.com" />
           <ContactItem icon={Phone} title="Phone" value="+9888 0024574" />
@@ -152,8 +152,8 @@ const InquiryPage = () => {
 
           <div className="h-px bg-background my-6" />
 
-          <p className="text-sm">
-            Support available Mon-Fri, 9:00 AM - 6:00 PM EST.
+          <p className="text-lg font-medium">
+           Our support is available Monday through Friday, 9.00 AM - 6:00 PM EST.
           </p>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default InquiryPage;
 const InputField = ({ label, error, ...props }: any) => (
   <div>
     <label className="block mb-2 text-sm">{label}</label>
-    <Input {...props} className="bg-transparent border border-background/50" />
+    <Input {...props} className="bg-transparent border border-primary/50" />
     {error && <p className="text-primary text-xs mt-1">{error}</p>}
   </div>
 );
@@ -176,7 +176,7 @@ const InputField = ({ label, error, ...props }: any) => (
 const TextareaField = ({ label, error, ...props }: any) => (
   <div>
     <label className="block mb-2 text-sm">{label}</label>
-    <Textarea {...props} className="bg-transparent min-h-[140px] border border-background/50" />
+    <Textarea {...props} className="bg-transparent min-h-[140px] border border-primary/50" />
     {error && <p className="text-primary text-xs mt-1">{error}</p>}
   </div>
 );

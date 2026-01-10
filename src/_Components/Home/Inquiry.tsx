@@ -124,7 +124,7 @@ export default function Inquiry() {
             {error && <p className="text-red-400 text-sm">{error}</p>}
           </form>
         </div>
-        <div className="absolute w-[400px] right-25 -bottom-8">
+        <div className="absolute w-[400px] md:right-30 lg:w-[300px] -bottom-8">
           <p>We are here to help you find the perfect luxury apartment in New York. Fill out the details below, and we we'll reach out with availability and pricing.</p>
         </div>
       </div>

@@ -1,9 +1,10 @@
 // redux/api/common/commonApi.ts
 import { rtkApi } from "@/services/rtkApi";
+import type { AboutUsResponse, FAQResponse, PrivacyPolicyResponse, TermConditionResponse} from "@/types";
 
 export const commonApi = rtkApi.injectEndpoints({
   endpoints: (builder) => ({
-    getPrivacyPolicy: builder.query<any, void>({
+    getPrivacyPolicy: builder.query<PrivacyPolicyResponse, void>({
       query: () => "/privacy/policy/get",
       keepUnusedDataFor: 60 * 60,
       async onQueryStarted(_, { queryFulfilled }) {
@@ -16,20 +17,20 @@ export const commonApi = rtkApi.injectEndpoints({
       },
     }),
 
-    getFaqs: builder.query<any, void>({
-      query: () => "/faq",
-      keepUnusedDataFor: 60 * 60,
-      async onQueryStarted(_, { queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          console.log("getFaqs response:", data);
-        } catch (error) {
-          console.error("getFaqs error:", error);
-        }
-      },
-    }),
+    getFaqs: builder.query<FAQResponse, void>({
+  query: () => "/faq/get",
+  keepUnusedDataFor: 60 * 60, // 1 hour
+  async onQueryStarted(_, { queryFulfilled }) {
+    try {
+      const { data } = await queryFulfilled;
+      console.log("getFaqs response:", data);
+    } catch (error) {
+      console.error("getFaqs error:", error);
+    }
+  },
+}),
 
-    getAboutUs: builder.query<any, void>({
+    getAboutUs: builder.query<AboutUsResponse, void>({
       query: () => "/about/us/get",
       keepUnusedDataFor: 60 * 60,
       async onQueryStarted(_, { queryFulfilled }) {
@@ -42,7 +43,7 @@ export const commonApi = rtkApi.injectEndpoints({
       },
     }),
 
-    getTermsOfService: builder.query<any, void>({
+    getTermsOfService: builder.query<TermConditionResponse, void>({
       query: () => "/terms/services/get",
       keepUnusedDataFor: 60 * 60,
       async onQueryStarted(_, { queryFulfilled }) {

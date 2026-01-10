@@ -15,7 +15,10 @@ const DashboardHome = () => {
   const { data:Profiledata, } = useGetUserProfileQuery();
 
   // Handle loading state
-  
+// SHOW SKELETON WHILE LOADING
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }  
   if (error) return <p>Error...</p>;
   if (!data?.message) return <p>Invalid data</p>;
 
@@ -47,10 +50,7 @@ const DashboardHome = () => {
   ];
 
 
-// SHOW SKELETON WHILE LOADING
-  if (isLoading) {
-    return <DashboardSkeleton />;
-  }
+
 
   return (
     // <DashboardLayout>
