@@ -32,8 +32,17 @@ export const apartmentsApi = rtkApi.injectEndpoints({
 
 
     // Love Apartment
-    loveApartment: builder.mutation<
-  { status: boolean; message: string },
+loveApartment: builder.mutation<
+  {
+    status: boolean;
+    message: string;
+    data: {
+      id: number;
+      user_id: number;
+      apartment_id: string;
+      is_loved: boolean;
+    };
+  },
   number
 >({
   query: (apartment_id) => {
@@ -53,6 +62,7 @@ export const apartmentsApi = rtkApi.injectEndpoints({
 getLovedApartments: builder.query<LovedApartment[], void>({
   query: () => "/apartments/loved/all",
   transformResponse: (response: LovedApartmentsResponse) => response.data,
+  providesTags: ["LovedApartments"],
 }),
 
 

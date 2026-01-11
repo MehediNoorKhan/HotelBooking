@@ -70,7 +70,7 @@ const Apartments = () => {
       </section>
 
       {/* Listings */}
-      <section className="py-12">
+      <section className="">
         <FeaturedProperties
           properties={apartmentsToShow}
           isLoading={isLoading || isSearching}

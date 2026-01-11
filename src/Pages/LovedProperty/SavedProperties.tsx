@@ -1,23 +1,23 @@
 import { useState } from "react";
-import type { Apartment } from "@/features/apartments/type";
-import PropertyCard from "../Shared_Component/PropertyCard";
+import type {LovedApartment } from "@/features/apartments/type";
 import { ChevronDown } from "lucide-react";
+import SavePropertyCard from "./SavePropertyCard";
 
-interface FeaturedPropertiesProps {
-  properties: Apartment[];
+interface SavedPropertiesProps {
+  properties: LovedApartment[];
   isLoading: boolean;
   isError: boolean;
   title?: string;
   subTitle?: string;
 }
 
-export default function FeaturedProperties({
+export default function SavedProperties({
   properties,
   isLoading,
   isError,
   title,
   subTitle,
-}: FeaturedPropertiesProps) {
+}: SavedPropertiesProps) {
   const [visibleCount, setVisibleCount] = useState(6);
 
   const visibleProperties = properties.slice(0, visibleCount);
@@ -59,7 +59,7 @@ export default function FeaturedProperties({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-7 lg:gap-8 xl:gap-10">
             
             {visibleProperties.map((item, index) => (
-              <PropertyCard key={item.id} item={item} index={index} />
+              <SavePropertyCard key={item.apartment_id} item={item} index={index} />
             ))}
           </div>
 

@@ -32,6 +32,6 @@ export const rtkApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Auth","FeaturedApartments","Apartments","Dashboard"],
+  tagTypes: ["Auth","FeaturedApartments","Apartments","LovedApartments","Dashboard"],
   endpoints: () => ({}),
 });

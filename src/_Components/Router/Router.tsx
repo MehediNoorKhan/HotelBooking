@@ -16,12 +16,12 @@ import SetNewPassword from "@/Pages/Auth/SetNewPassword";
 import InquiryPage from "@/Pages/Inquiry/InquiryPage";
 import Terms from "@/Pages/Terms/Terms";
 import Policy from "@/Pages/Policy/Policy";
-import SavedProperty from "@/Pages/SavedProperty/SavedProperty";
 
 import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "../Dashboard/DashboardLayout";
 import NotFound from "@/Pages/NotFound";
 import { createBrowserRouter } from "react-router";
+import SavedProperty from "@/Pages/LovedProperty/SaveProperty";
 
 export const router = createBrowserRouter([
   {

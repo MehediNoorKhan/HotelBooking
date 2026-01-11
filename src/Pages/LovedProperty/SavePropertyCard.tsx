@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
-import type { Apartment} from "@/features/apartments/type";
+import type { LovedApartment } from "@/features/apartments/type";
 
 import locationicon from "../../images/locationIconCardgray.png";
 import guesticon from "../../images/guesticonCardgray.png";
@@ -11,14 +11,13 @@ import kitchenicon from "../../images/kitcheniconCardgray.png";
 import gymicon from "../../images/gymiconCardgray.png";
 
 import { useState } from "react";
-// ↑ removed useEffect since we no longer need auto-sliding
 
 interface Props {
-  item:  Apartment;
+  item: LovedApartment;
   index: number;
 }
 
-export default function PropertyCard({ item, index }: Props) {
+export default function SavePropertyCard({ item, index }: Props) {
   const mapAmenityToIcon = (name: string) => {
     switch (name.toLowerCase()) {
       case "wifi":
@@ -156,7 +155,7 @@ export default function PropertyCard({ item, index }: Props) {
         </div>
 
         <Link
-          to={`/apartment/${item.id}`}
+          to={`/apartment/${item.apartment_id}`}
           className="block text-center border border-primary/40 py-2.5 rounded-xl hover:bg-primary hover:text-muted transition"
         >
           See details...

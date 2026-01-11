@@ -1,6 +1,6 @@
-import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
-import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
 import image from "@/images/apartmentImage.png";
+import { useGetLovedApartmentsQuery } from "@/features/apartments/apartmentAPI";
+import SavedProperties from "./SavedProperties";
 
 
 
@@ -10,7 +10,7 @@ const SavedProperty = () => {
     data: apartments = [],
     isLoading,
     isError,
-  } = useGetFeaturedApartmentsQuery();
+  } = useGetLovedApartmentsQuery();
 
   return (
     <div className="container mx-auto max-w-7xl px-6">
@@ -27,7 +27,7 @@ const SavedProperty = () => {
 
       {/* -------------------- Content -------------------- */}
       <section className="py-12 sm:py-16 lg:py-20">
-              <FeaturedProperties
+<SavedProperties
                 properties={apartments}
                 isLoading={isLoading}
               isError={isError}

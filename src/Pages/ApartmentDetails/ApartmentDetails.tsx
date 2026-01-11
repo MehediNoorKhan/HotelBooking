@@ -13,56 +13,64 @@ import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApa
 import { useLoveApartmentMutation } from "@/features/apartments/apartmentAPI";
 import { useEffect, useState } from "react";
 
-
-
 const ApartmentDetails = () => {
   const { id } = useParams<{ id: string }>();
-const [isLoved, setIsLoved] = useState<boolean>(false);
-const isAuthenticated = Boolean(localStorage.getItem("token"));
+  const [isLoved, setIsLoved] = useState<boolean>(false);
+  const isAuthenticated = Boolean(localStorage.getItem("token"));
 
-  
-  
   const {
-  data: apartment,
-  isLoading,
-  isError,
-  refetch, 
-} = useGetApartmentDetailsQuery(id!, {
-  skip: !id,
-});
+    data: apartment,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetApartmentDetailsQuery(id!, { skip: !id });
+
   const { data: apartments = [] } = useGetFeaturedApartmentsQuery();
-  
-  const [loveApartment, { isLoading: isLoving }] =
-  useLoveApartmentMutation();
 
+  const [loveApartment, { isLoading: isLoving }] = useLoveApartmentMutation();
 
-  // Handle Love Apartment
+  // Sync heart state with apartment data
   useEffect(() => {
-  if (apartment?.is_loved !== undefined) {
-    setIsLoved(Boolean(apartment.is_loved));
-  }
-}, [apartment?.is_loved]);
+    if (apartment?.is_loved !== undefined) {
+      setIsLoved(Boolean(apartment.is_loved));
+    }
+  }, [apartment?.is_loved]);
 
-const handleLove = async () => {
-  if (!isAuthenticated) {
-    toast.error("Please login to save apartment");
-    return;
-  }
-  if (!apartment?.id) return;
+  // Handle Love/Unlove Apartment with optimistic UI
+  const handleLove = async () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to save apartment");
+      return;
+    }
+    if (!apartment?.id || isLoving) return;
 
-  try {
-    await loveApartment(apartment.id).unwrap();
-    setIsLoved(true);
-    refetch();
-    toast.success("Apartment saved successfully!");
-  } catch {
-    toast.error("Failed to save apartment");
-  }
-};
+    try {
+      // Optimistically toggle heart
+      setIsLoved((prev) => !prev);
 
-  
-  const [getShareUrl, { isFetching: isSharing }] =
-    useLazyGetApartmentShareQuery();
+      const res = await loveApartment(apartment.id).unwrap();
+
+      // Ensure state matches server
+      const loved = res.data?.is_loved ?? false;
+      setIsLoved(loved);
+
+      // Refetch apartment to sync other data if needed
+      refetch();
+
+      // Show correct toast message
+      toast.success(
+        loved
+          ? "Apartment saved successfully!"
+          : "Apartment removed from saved list"
+      );
+    } catch {
+      // Revert UI if request fails
+      setIsLoved((prev) => !prev);
+      toast.error("Failed to update saved state");
+    }
+  };
+
+  const [getShareUrl, { isFetching: isSharing }] = useLazyGetApartmentShareQuery();
 
   const handleShare = async () => {
     if (!apartment?.id) return;
@@ -86,11 +94,8 @@ const handleLove = async () => {
     );
   }
 
-  const apartmentAmenities =
-  apartment.amenities_by_category?.Apartment ?? [];
-
-const buildingAmenities =
-  apartment.amenities_by_category?.Building ?? [];
+  const apartmentAmenities = apartment.amenities_by_category?.Apartment ?? [];
+  const buildingAmenities = apartment.amenities_by_category?.Building ?? [];
 
   return (
     <div className="bg-foreground">
@@ -104,7 +109,7 @@ const buildingAmenities =
         <div className="pt-7.5 pb-2.5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div>
             {apartment.is_featured && (
-              <span className="inline-block h-[30px] px-3 py-1.5 rounded-[92px] bg-primary text-accent-foreground text-[14px] font-medium">
+              <span className="inline-block h-[30px] px-3 py-1 rounded-[92px] bg-primary text-accent-foreground text-[14px] font-medium">
                 Featured Property
               </span>
             )}
@@ -115,24 +120,22 @@ const buildingAmenities =
           </div>
 
           <div className="flex gap-3">
-           <button
-  onClick={handleLove}
-  disabled={isLoving}
-  className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center
-  disabled:opacity-50 disabled:cursor-not-allowed"
->
-  <Heart
-    size={18}
-   className={isLoved ? "fill-red-500 text-red-500" : ""}
-  />
-  {isLoving ? "Saving..." : "Save"}
-</button>
+            <button
+              onClick={handleLove}
+              disabled={isLoving}
+              className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Heart
+                size={18}
+                className={isLoved ? "fill-red-500 text-red-500" : ""}
+              />
+              {isLoving ? "Saving..." : "Save"}
+            </button>
 
             <button
               onClick={handleShare}
               disabled={isSharing}
-              className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center
-              disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Share2 size={18} />
               {isSharing ? "Sharing..." : "Share"}
@@ -158,7 +161,7 @@ const buildingAmenities =
             location={apartment.full_address}
             description={apartment.description}
             apartmentAmenities={apartmentAmenities}
-  buildingAmenities={buildingAmenities}
+            buildingAmenities={buildingAmenities}
           />
 
           <BookingForm
@@ -196,9 +199,9 @@ const buildingAmenities =
             available 24/7.
           </p>
           <Link to="/inquiry">
-          <button className="mt-6 bg-primary px-6 py-3 rounded-xl flex items-center gap-2 mx-auto hover:scale-95">
-            <Send size={18} /> Send Inquiry Now
-          </button>
+            <button className="mt-6 bg-primary px-6 py-3 rounded-xl flex items-center gap-2 mx-auto hover:scale-95">
+              <Send size={18} /> Send Inquiry Now
+            </button>
           </Link>
         </div>
       </div>
