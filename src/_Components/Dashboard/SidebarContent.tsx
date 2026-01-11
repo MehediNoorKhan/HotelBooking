@@ -9,7 +9,11 @@ import { useLogoutMutation } from "@/features/auth/authAPI";
 import { useGetUserProfileQuery } from "@/features/user/userAPI"; // <-- import query
 import userIcon from "@/images/dashboardimage.svg"; // fallback image
 
-export default function SidebarContent() {
+type SidebarContentProps = {
+  onNavigate?: () => void;
+};
+
+export default function SidebarContent({ onNavigate }: SidebarContentProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -86,22 +90,22 @@ export default function SidebarContent() {
       {/* Navigation */}
       <nav className="flex-1">
         <div className="space-y-1 px-4">
-          <NavLink to="/dashboard" end className={navItemClass}>
+          <NavLink to="/dashboard" end className={navItemClass} onClick={onNavigate}>
             <Home size={20} />
             <span>Home</span>
           </NavLink>
 
-          <NavLink to="/dashboard/bookings" className={navItemClass}>
+          <NavLink to="/dashboard/bookings" className={navItemClass} onClick={onNavigate}>
             <Calendar size={20} />
             <span>My Bookings</span>
           </NavLink>
 
-          <NavLink to="/dashboard/maintenance" className={navItemClass}>
+          <NavLink to="/dashboard/maintenance" className={navItemClass} onClick={onNavigate}>
             <Settings size={20} />
             <span>Maintenance</span>
           </NavLink>
 
-          <NavLink to="/dashboard/profile" className={navItemClass}>
+          <NavLink to="/dashboard/profile" className={navItemClass} onClick={onNavigate}>
             <User size={20} />
             <span>Profile</span>
           </NavLink>

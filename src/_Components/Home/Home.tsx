@@ -23,7 +23,7 @@ export default function Home() {
         isLoading={isLoading}
         isError={isError}
         title="Featured Properties"
-        subTitle="Handpicked apartments that embody sophistication and comfort."
+        subTitle="Handpicked apartments that embody sophistication and comfort in New York's most prestigios locations."
       />
 
       {/* Always visible */}

@@ -26,85 +26,89 @@ export default function StayCard({
         bg-accent-foreground
         border border-border/50
         rounded-2xl
-        p-4 sm:p-6
-        flex flex-col sm:flex-row
-        gap-4 sm:gap-6
+        overflow-hidden
+        p-4 sm:p-5 md:p-6
+        flex flex-col gap-5
+        lg:flex-row lg:items-start
+        transition-all duration-200
       `}
     >
       {/* Image */}
-      <img
-        src={stay.image}
-        alt={stay.title}
+      <div
         className={`
-          object-cover
-          rounded-xl
-          w-full
-          h-48
-          sm:h-auto
-          ${
-            isLarge
-              ? "sm:w-48 sm:h-48"
-              : "sm:w-32 sm:h-32"
-          }
+          flex-shrink-0
+          overflow-hidden rounded-xl
+          ${isLarge ? "w-full lg:w-56" : "w-full lg:w-44"}
         `}
-      />
+      >
+        <img
+          src={stay.image}
+          alt={stay.title}
+          className={`
+            object-cover w-full 
+            ${isLarge ? "h-56 lg:h-48" : "h-52 lg:h-44"}
+            rounded-xl
+          `}
+        />
+      </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col justify-between">
-        <div>
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex flex-col gap-3 flex-1">
           {/* Title + Status */}
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2.5">
             <h3
-              className={
-                isLarge
-                  ? "text-lg sm:text-xl font-bold"
-                  : "text-base sm:text-lg font-bold"
-              }
+              className={`
+                font-bold leading-tight
+                ${isLarge ? "text-lg sm:text-xl" : "text-base sm:text-lg"}
+              `}
             >
               {stay.title}
             </h3>
 
             <span
-              className={`self-start px-3 py-1 rounded-full text-xs ${statusStyles[stay.status]}`}
+              className={`
+                self-start px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap
+                ${statusStyles[stay.status]}
+              `}
             >
-              {stay.status}
+              {stay.status.charAt(0).toUpperCase() + stay.status.slice(1)}
             </span>
           </div>
 
           {/* Location */}
-          <div className="flex items-center gap-2 text-muted/60 text-sm mb-2">
-            <MapPin size={14} className="sm:hidden" />
-            <MapPin size={16} className="hidden sm:block" />
-            <span>{stay.address}</span>
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
+            <MapPin size={14} className="flex-shrink-0" />
+            <span className="truncate">{stay.address}</span>
           </div>
 
           {/* Date */}
-          <div className="flex items-center gap-2 text-muted/60 text-sm mb-3">
-            <Calendar size={14} className="sm:hidden" />
-            <Calendar size={16} className="hidden sm:block" />
-            <span>
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
+            <Calendar size={14} className="flex-shrink-0" />
+            <span className="truncate">
               {stay.dateRange} • {stay.nights} nights
             </span>
           </div>
 
           {/* Price */}
-          <div className="text-muted/60 text-sm mb-1">
-            {stay.monthlyPrice} / month
-          </div>
-          <div
-            className={
-              isLarge
-                ? "text-xl sm:text-2xl font-bold font-display"
-                : "text-lg sm:text-xl font-bold font-display"
-            }
-          >
-            {stay.totalPrice}
+          <div className="mt-auto pt-2">
+            <div className="text-sm text-muted-foreground">
+              {stay.monthlyPrice} / month
+            </div>
+            <div
+              className={`
+                font-bold font-display tracking-tight
+                ${isLarge ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}
+              `}
+            >
+              {stay.totalPrice}
+            </div>
           </div>
         </div>
 
-        {/* Action */}
-        <div className="flex justify-end mt-4">
-          
+        {/* Action area */}
+        <div className="flex justify-end mt-4 lg:mt-0">
+          {/* Buttons go here later if needed */}
         </div>
       </div>
     </div>

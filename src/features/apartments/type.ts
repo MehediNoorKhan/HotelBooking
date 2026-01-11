@@ -67,7 +67,6 @@ export interface LovedApartment {
   love_id: number;
   user_id: number;
   apartment_id: number;
-  id?:number;
   name: string;
   short_description: string;
   description: string;

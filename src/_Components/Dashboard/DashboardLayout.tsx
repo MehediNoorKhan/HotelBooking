@@ -24,7 +24,7 @@ export default function DashboardLayout() {
             md:pt-20
           "
         >
-          <Outlet /> {/* 👈 THIS IS THE KEY */}
+          <Outlet /> {/* THIS IS THE KEY */}
         </main>
 
         {/* Mobile sidebar overlay */}

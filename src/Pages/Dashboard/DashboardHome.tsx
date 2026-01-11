@@ -83,7 +83,7 @@ const DashboardHome = () => {
           </div>
 
           {upcomingBookings.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               {upcomingBookings.map((booking) => (
                 <StayCard key={booking.booking_id} stay={mapBookingToStay(booking)}
       variant="large" />
@@ -104,7 +104,7 @@ const DashboardHome = () => {
           </div>
 
           {recentBookings.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               {recentBookings.map((booking) => (
                 <StayCard key={booking.booking_id} stay={mapBookingToStay(booking)} variant="small" />
               ))}

@@ -110,7 +110,7 @@ export default function Banner() {
                       ref={locationRef}
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      placeholder="New York"
+                      placeholder="New York,Manhattan..."
                       className="
                         bg-transparent outline-none
                         text-white placeholder:text-white/45

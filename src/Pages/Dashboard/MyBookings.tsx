@@ -45,7 +45,7 @@ const MyBooking = () => {
           <p>No bookings found.</p>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {bookings.map((booking) => (
             <StayCard
               key={booking.booking_id}
