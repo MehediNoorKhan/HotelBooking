@@ -94,8 +94,7 @@ const ApartmentDetails = () => {
     );
   }
 
-  const apartmentAmenities = apartment.amenities_by_category?.Apartment ?? [];
-  const buildingAmenities = apartment.amenities_by_category?.Building ?? [];
+  
 
   return (
     <div className="bg-foreground">
@@ -160,8 +159,7 @@ const ApartmentDetails = () => {
             squareFootage={`${apartment.square_feet} sq ft`}
             location={apartment.full_address}
             description={apartment.description}
-            apartmentAmenities={apartmentAmenities}
-            buildingAmenities={buildingAmenities}
+            amenitiesByCategory={apartment.amenities_by_category}
           />
 
           <BookingForm

@@ -8,6 +8,10 @@ interface Amenity {
   icon?: string;
 }
 
+interface AmenitiesByCategory {
+  [category: string]: Amenity[];
+}
+
 interface PropertyInfoProps {
   monthlyRate?: string;
   bedrooms?: string;
@@ -16,8 +20,7 @@ interface PropertyInfoProps {
   squareFootage?: string;
   location?: string;
   description: string;
-   apartmentAmenities?: Amenity[];
-  buildingAmenities?: Amenity[];
+  amenitiesByCategory?: AmenitiesByCategory;
 }
 
 const PropertyInfo: React.FC<PropertyInfoProps> = ({
@@ -28,8 +31,7 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
   squareFootage = "",
   location = "",
   description = "",
-  apartmentAmenities = [],
-  buildingAmenities = [],
+ amenitiesByCategory = {},
 }) => {
 
 
@@ -64,55 +66,42 @@ const PropertyInfo: React.FC<PropertyInfoProps> = ({
         </div>
       </div>
 
-      {/* Apartment Amenities Section */}
-      {apartmentAmenities.length > 0 && (
-        <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
-          <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
-            Apartment Amenities
-          </h2>
+      {/* Amenities Section */}
+      {amenitiesByCategory &&
+  Object.entries(amenitiesByCategory).map(([category, amenities]) => {
+    if (!amenities || amenities.length === 0) return null;
 
-          <div className="flex flex-wrap gap-3">
-            {apartmentAmenities.map((a) => (
-              <StatCard
-                key={a.id}
-                icon={
-                  a.icon ? (
-                    <img src={a.icon} className="w-6 h-6 object-contain" />
-                  ) : (
-                    <BedDouble className="text-primary w-6 h-6" />
-                  )
-                }
-                label={a.name}
-              />
-            ))}
-          </div>
+    return (
+      <div
+        key={category}
+        className="bg-primary-foreground border border-primary rounded-2xl p-8"
+      >
+        <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
+          {category} Amenities
+        </h2>
+
+        <div className="flex flex-wrap gap-3">
+          {amenities.map((a) => (
+            <StatCard
+              key={a.id}
+              icon={
+                a.icon ? (
+                  <img
+                    src={a.icon}
+                    alt={a.name}
+                    className="w-6 h-6 object-contain"
+                  />
+                ) : (
+                  <BedDouble className="text-primary w-6 h-6" />
+                )
+              }
+              label={a.name}
+            />
+          ))}
         </div>
-      )}
-
-      {/* Building ameninities */}
-      {buildingAmenities.length > 0 && (
-        <div className="bg-primary-foreground border border-primary rounded-2xl p-8">
-          <h2 className="text-primary text-[20px] font-normal mb-6 tracking-wide">
-            Building Amenities
-          </h2>
-
-          <div className="flex flex-wrap gap-3">
-            {buildingAmenities.map((a) => (
-              <StatCard
-                key={a.id}
-                icon={
-                  a.icon ? (
-                    <img src={a.icon} className="w-6 h-6 object-contain" />
-                  ) : (
-                    <BedDouble className="text-primary w-6 h-6" />
-                  )
-                }
-                label={a.name}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      </div>
+    );
+  })}
     </div>
   );
 };
