@@ -6,6 +6,7 @@ export function mapBookingToStay(booking: Booking): Stay {
     title: booking.title,
     image: booking.image,
     address: booking.address,
+    invoice: booking.booking_invoice,
     status: booking.status,
     nights: booking.nights,
     dateRange: `${booking.check_in_date} - ${booking.check_out_date}`,

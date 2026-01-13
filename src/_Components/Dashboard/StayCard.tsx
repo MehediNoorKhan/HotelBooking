@@ -1,5 +1,5 @@
 import type { Stay } from "@/types";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, Mail, MapPin } from "lucide-react";
 
 interface StayCardProps {
   stay: Stay;
@@ -36,7 +36,7 @@ export default function StayCard({
       {/* Image */}
       <div
         className={`
-          flex-shrink-0
+          shrink-0
           overflow-hidden rounded-xl
           ${isLarge ? "w-full lg:w-56" : "w-full lg:w-44"}
         `}
@@ -75,16 +75,20 @@ export default function StayCard({
               {stay.status.charAt(0).toUpperCase() + stay.status.slice(1)}
             </span>
           </div>
-
+                {/* Invoice */}
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <Mail size={14} className="shrink-0" />
+            <span className="font-medium">Invoice: {stay.invoice}</span>
+                </div>
           {/* Location */}
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <MapPin size={14} className="flex-shrink-0" />
+            <MapPin size={14} className="shrink-0" />
             <span className="truncate">{stay.address}</span>
           </div>
 
           {/* Date */}
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <Calendar size={14} className="flex-shrink-0" />
+            <Calendar size={14} className="shrink-0" />
             <span className="truncate">
               {stay.dateRange} • {stay.nights} nights
             </span>

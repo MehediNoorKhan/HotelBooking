@@ -18,6 +18,7 @@ export interface Stay {
   title: string;
   image: string;
   address: string;
+  invoice: string;
   dateRange: string;
   nights: number;
   monthlyPrice: string;
