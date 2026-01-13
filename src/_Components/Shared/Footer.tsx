@@ -123,7 +123,7 @@ export default function Footer() {
 
             <li className="cursor-pointer hover:text-muted transition">
               <Link
-                to="/privacy-policy"
+                to="/policy"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="cursor-pointer hover:text-muted transition"
               >

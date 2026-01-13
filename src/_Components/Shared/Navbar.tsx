@@ -19,9 +19,9 @@ export default function Navbar() {
   const menuItems = [
     { label: "Home", path: "/" },
     { label: "NYC Apartments", path: "/apartments" },
-    { label: "About", path: "/about" },
-    { label: "FAQ", path: "/faq" },
-    { label: "Inquiry", path: "/inquiry" },
+    { label: "About", path: "/about_page" },
+    { label: "FAQ", path: "/faq_page" },
+    { label: "Inquiry", path: "/inquiry_page" },
     { label: "Go to Dashboard", path: "/dashboard" },
   ];
 

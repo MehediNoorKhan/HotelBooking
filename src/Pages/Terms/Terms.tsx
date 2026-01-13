@@ -1,10 +1,11 @@
 import { useGetTermsOfServiceQuery } from "@/features/common/commonApi";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 import image from "@/images/apartmentImage.png";
 import parse from "html-react-parser";
 
 const Terms = () => {
   const { data, isLoading, isError } = useGetTermsOfServiceQuery();
-
+const { bannerData } = usePageBanner("terms");
   if (isLoading) {
     return <p className="text-center mt-20 text-muted">Loading Terms of Service...</p>;
   }
@@ -38,7 +39,7 @@ const Terms = () => {
 
         <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] my-5">
           <img
-            src={image}
+            src={bannerData?.data?.image || image}
             alt="Terms of Service"
             className="w-full h-full object-cover"
           />
@@ -50,12 +51,12 @@ const Terms = () => {
         {/* Intro */}
         <div className="border border-primary rounded-[20px] py-12 px-6">
           <p>
-            Welcome to our luxury apartment rental platform. These Terms of Service ("Terms") govern your access to and use of our website and services. By using our platform, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you have any questions or concerns, please contact us.
+            {bannerData?.data?.short_description  || "Welcome to our Terms of Service. Please read these terms carefully before using our services."}
           </p>
         </div>
 
         {/* Parsed HTML content from API */}
-        <div className="space-y-6 leading-relaxed text-base break-words overflow-hidden max-w-full">
+        <div className="space-y-6 leading-relaxed text-base wrap-break-word overflow-hidden max-w-full">
           {parse(terms.content)}
         </div>
       </div>

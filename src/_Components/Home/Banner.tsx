@@ -5,6 +5,7 @@ import locationIcon from "../../images/locationIcon.png";
 import checkinIcon from "../../images/checkinIcon.png";
 import { useSearchApartmentsMutation } from "@/features/apartments/apartmentAPI";
 import type { Apartment } from "@/features/apartments/type";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 
 export default function Banner() {
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ export default function Banner() {
   const [showResults, setShowResults] = useState(false);
 
   const [searchApartments, { isLoading }] = useSearchApartmentsMutation();
+
+      const { bannerData } = usePageBanner("home_banner");
+
 
   const handleSearch = async () => {
     if (!location) return;
@@ -76,9 +80,9 @@ export default function Banner() {
       >
         <div className="max-w-7xl mx-auto text-center space-y-2">
           <h1 className="text-background font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal drop-shadow-lg ">
-            Experience Luxury Living in New York
+            {bannerData?.data?.title}
           </h1>
-          <p className="text-white/90 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto font-light">Discover our curated of premium apartments in Manhattan's most exclusive neighbourhoods. Refined elegance meets exceptional service</p>
+          <p className="text-white/90 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto font-light">{bannerData?.data?.short_description}</p>
 
 
             {/* Search Bar */}

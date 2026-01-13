@@ -9,6 +9,7 @@ import FeaturedProperties from "@/_Components/Home/FeaturedPropertiesCard";
 import image from "../../images/apartmentImage.png";
 import type { Apartment } from "@/features/apartments/type";
 import { buildSearchPayload } from "@/Helper/builSearchPayload";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 
 const Apartments = () => {
   const [searchedApartments, setSearchedApartments] =
@@ -19,6 +20,8 @@ const Apartments = () => {
     isLoading,
     isError,
   } = useGetAllApartmentsQuery(undefined);
+
+  const { bannerData } = usePageBanner("apartments");
 
   const [searchApartments, { isLoading: isSearching }] =
     useSearchApartmentsMutation();
@@ -50,18 +53,18 @@ const Apartments = () => {
       <section className="pt-16 pb-20 flex flex-col items-center">
         <div className="text-center max-w-7xl flex flex-col gap-6">
           <h1 className="text-muted font-display font-extrabold text-[32px] sm:text-[40px] lg:text-[54px]">
-            Explore Our Luxury Apartments in New York
+           {bannerData?.data?.title || "Discover Your Perfect Luxury Apartment in NYC"}
           </h1>
           <p className="text-muted text-base w-3/4 self-center">
-            Browse our curated collection of premium residences.
+            {bannerData?.data?.short_description || "Explore our curated selection of high-end apartments in the heart of New York City. Whether you're seeking a chic studio in SoHo or a spacious penthouse in Midtown, we have the perfect home for you."}
           </p>
         </div>
 
         <div className="w-full my-10 overflow-hidden rounded-tl-[80px] rounded-br-[80px]">
           <img
-            src={image}
+            src={bannerData?.data?.image||image}
             alt="Luxury Apartment"
-            className="w-full h-[220px] sm:h-[360px] lg:h-[450px] object-cover"
+            className="w-full h-[220px] sm:h-[360px] lg:h-[550px] object-cover"
           />
         </div>
 

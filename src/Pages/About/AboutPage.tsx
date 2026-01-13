@@ -1,4 +1,3 @@
-import image from "@/images/apartmentImage.png";
 import image2 from "@/images/aboutImage2.png";
 import ctaBg from "@/images/CTA image.png";
 import quality from "@/assets/Icons/Check.svg"
@@ -9,9 +8,11 @@ import eye from "@/assets/Icons/eye.svg"
 import { Send } from "lucide-react";
 import { useGetAboutUsQuery} from "@/features/common/commonApi";
 import parse from "html-react-parser";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 
 const AboutPage = () => {
 const { data, isLoading, isError } = useGetAboutUsQuery();
+const { bannerData } = usePageBanner("about_page");
 
   if (isLoading) {
     return <p className="text-center mt-20 text-muted">Loading About Us...</p>;
@@ -33,13 +34,12 @@ const { data, isLoading, isError } = useGetAboutUsQuery();
         </h1>
 
         <p className="text-base sm:text-lg text-muted max-w-2xl">
-          Your trusted partner for authentic NYC apartment experiences since
-          2018
+         {bannerData?.data?.short_description}
         </p>
 
         {/* Full-width hero image */}
         <div className="w-full overflow-hidden rounded-tl-[80px] rounded-br-[80px] sm:rounded-tl-[120px] sm:rounded-br-[120px] my-10">
-          <img src={image} alt="Apartment" className="w-full object-cover" />
+          <img src={bannerData?.data?.image} alt="Apartment" className="w-full h-[500px] object-cover" />
         </div>
       </div>
 

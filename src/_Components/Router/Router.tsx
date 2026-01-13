@@ -31,16 +31,16 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "apartment/:id", element: <ApartmentDetails /> },
       { path: "apartments", element: <Apartments /> },
-      { path: "about", element: <AboutPage /> },
-      { path: "faq", element: <FaqPage /> },
+      { path: "about_page", element: <AboutPage /> },
+      { path: "faq_page", element: <FaqPage /> },
       { path: "signup", element: <SignUpPage /> },
       { path: "signin", element: <LoginPage /> },
       { path: "forgot-password", element: <ForgotPasswordForm /> },
       { path: "verification", element: <VerifyEmailOTP /> },
       { path: "reset-password", element: <SetNewPassword /> },
-      { path: "inquiry", element: <InquiryPage /> },
+      { path: "inquiry_page", element: <InquiryPage /> },
       { path: "terms", element: <Terms /> },
-      { path: "privacy-policy", element: <Policy /> },
+      { path: "policy", element: <Policy /> },
 
       
       {

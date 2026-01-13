@@ -1,20 +1,31 @@
-import { FAQComponent} from "@/_Components/FAQ/FaqSection";
+import { FAQComponent } from "@/_Components/FAQ/FaqSection";
 import type { FAQSection } from "@/_Components/FAQ/FaqSection";
 import { useGetFaqsQuery } from "@/features/common/commonApi";
-import image from "@/images/apartmentImage.png";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 
 const FaqPage = () => {
   const { data, isLoading, isError } = useGetFaqsQuery();
 
-  if (isLoading) {
-    return <p className="text-center mt-20 text-muted">Loading FAQs...</p>;
+  const { bannerData } = usePageBanner("faq_page");
+
+  console.log(bannerData)
+
+  if (isLoading ) {
+    return (
+      <p className="text-center mt-20 text-muted">
+        Loading FAQs...
+      </p>
+    );
   }
 
-  if (isError || !data?.data) {
-    return <p className="text-center mt-20 text-primary">Failed to load FAQs.</p>;
+  if (isError  || !data?.data) {
+    return (
+      <p className="text-center mt-20 text-primary">
+        Failed to load FAQs.
+      </p>
+    );
   }
 
-  // Convert API data to the section structure expected by FAQComponent
   const faqSections: FAQSection[] = [
     {
       title: "General Questions",
@@ -34,11 +45,15 @@ const FaqPage = () => {
         </h1>
 
         <p className="text-base sm:text-lg text-muted max-w-2xl">
-          Everything you need to know about booking and staying in our NYC apartments. Can't find what you're looking for? We're here to help.
+          {bannerData?.data?.short_description}
         </p>
 
-        <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] sm:rounded-tl-[120px] sm:rounded-br-[120px] my-10">
-          <img src={image} alt="Apartment" className="w-full object-contain" />
+        <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] sm:rounded-tl-[120px] sm:rounded-br-[120px] my-10 bg-gray-100">
+          <img
+            src={bannerData?.data?.image}
+            alt={bannerData?.data?.title}
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import image from "@/images/apartmentImage.png";
 import { sendInquiry } from "@/services/contactServices";
 import { toast } from "sonner";
+import { usePageBanner } from "@/Hooks/usePageBanner";
 
 const InquiryPage = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const InquiryPage = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+const { bannerData } = usePageBanner("inquiry_page");
 
   /* -------------------- helpers -------------------- */
   const handleChange = (
@@ -82,14 +84,13 @@ const InquiryPage = () => {
     <div className="container mx-auto pb-12 px-4 text-muted pt-10 font-medium lg:py-20">
       {/* Hero */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
+        <h1 className="text-4xl font-bold mb-4">{bannerData?.data?.title}</h1>
         <p className="max-w-2xl mx-auto">
-          Have a question or need assistance? Send us a message and we`ll
-          respond within 24 hours.
+          {bannerData?.data?.short_description || "Get in touch with us for any inquiries or assistance. We're here to help you find your perfect apartment in NYC."}
         </p>
 
         <div className="w-full h-[250px] overflow-hidden rounded-tl-[80px] rounded-br-[80px] my-10">
-          <img src={image} alt="Apartment" className="w-full h-full object-cover" />
+          <img src={bannerData?.data?.image||image} alt="Apartment" className="w-full h-full object-cover" />
         </div>
       </div>
 
