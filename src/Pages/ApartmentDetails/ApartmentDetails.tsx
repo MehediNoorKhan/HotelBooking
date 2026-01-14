@@ -6,7 +6,6 @@ import { Link, useParams } from "react-router";
 import ApartmentDetailsSkeleton from "../../_Components/ApartmentDetails/ApartmentDetailsSkeleton";
 import ctaBg from "@/images/CTA image.png";
 import FeaturedCard from "@/_Components/ApartmentDetails/FeaturedCard";
-import { useLazyGetApartmentShareQuery } from "@/services/apartmentShareApi";
 import { toast } from "sonner";
 import { useGetApartmentDetailsQuery } from "@/features/apartments/apartmentAPI";
 import { useGetFeaturedApartmentsQuery } from "@/features/apartments/featuredApartmentsApi";
@@ -70,19 +69,16 @@ const ApartmentDetails = () => {
     }
   };
 
-  const [getShareUrl, { isFetching: isSharing }] = useLazyGetApartmentShareQuery();
 
   const handleShare = async () => {
-    if (!apartment?.id) return;
-
-    try {
-      const res = await getShareUrl(apartment.id).unwrap();
-      await navigator.clipboard.writeText(res.data.share_url);
-      toast.success("Share link copied to clipboard!");
-    } catch {
-      toast.error("Failed to copy share link");
-    }
-  };
+  try {
+    const currentUrl = window.location.href;
+    await navigator.clipboard.writeText(currentUrl);
+    toast.success("Link copied to clipboard!");
+  } catch {
+    toast.error("Failed to copy link");
+  }
+};
 
   if (isLoading) return <ApartmentDetailsSkeleton />;
 
@@ -133,11 +129,10 @@ const ApartmentDetails = () => {
 
             <button
               onClick={handleShare}
-              disabled={isSharing}
               className="h-[45px] px-5 bg-background rounded-2xl flex gap-2 items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Share2 size={18} />
-              {isSharing ? "Sharing..." : "Share"}
+              Share
             </button>
           </div>
         </div>
